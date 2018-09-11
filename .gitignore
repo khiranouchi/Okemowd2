@@ -10,6 +10,7 @@ __pycache__
 *.pyc
 *.pyo
 *.sqlite3
+migrations
 MANIFEST
 dist/
 docs/_build/
