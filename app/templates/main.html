@@ -5,5 +5,59 @@ Song List
 {% endblock %}
 
 {% block body %}
-Main Page Content
+
+<!-- Filter result -->
+<div>
+    Filter result TODO
+</div>
+
+<!-- Song list -->
+<div>
+
+    <!-- Select visible column -->
+    <div>
+        Select visible column TODO
+    </div>
+
+    <!-- Table -->
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>name</th>
+                    <th>artist</th>
+                    <th>genre</th>
+                    <th>key_level</th>
+                    <th>key_min</th>
+                    <th>key_freq_min</th>
+                    <th>key_freq_max</th>
+                    <th>key_max</th>
+                    <th>rank</th>
+                    <th>link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in song_list %}
+                <tr>
+                    <td>{{ song.id }}</td>
+                    <td>{{ song.name }}</td>
+                    <td>{{ song.artist }}</td>
+                    <td>{{ song.genre }}</td> <!-- TODO enum -->
+                    <td>{{ song.key_level }}</td> <!-- TODO enum -->
+                    <td>{{ song.key_min }}</td> <!-- TODO enum? -->
+                    <td>{{ song.key_freq_min }}</td> <!-- TODO enum? -->
+                    <td>{{ song.key_freq_max }}</td> <!-- TODO enum? -->
+                    <td>{{ song.key_max }}</td> <!-- TODO enum? -->
+                    <td>{{ song.rank }}</td> <!-- TODO enum -->
+                    <td>{{ song.link }}</td> <!-- TODO -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
 {% endblock %}
