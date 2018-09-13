@@ -21,7 +21,7 @@ Song List
 
     <!-- Table -->
     <div>
-        <table>
+        <table id="table_song_list">
             <thead>
                 <tr>
                     <th>{{ STR_SONG_PROPERTY.ID }}</th>
@@ -58,5 +58,11 @@ Song List
     </div>
 
 </div>
+
+<script>
+$(document).ready(function(){
+    $("#table_song_list").tablesorter();
+});
+</script>
 
 {% endblock %}
