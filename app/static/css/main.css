@@ -1,0 +1,66 @@
+/* main structure ****************************/
+
+/* body */
+body {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: white;
+}
+
+/* each part */
+.x_part {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+
+/* subtitle of each part *********************/
+
+/* subtitle div */
+.x_subtitle {
+    background-color: black;
+    color: white;
+    font-size: medium;
+    font-weight: bold;
+}
+
+
+/* table *************************************/
+
+/* table */
+.table {
+    margin-bottom: 0px;
+}
+
+/* thead */
+.table>thead>tr>th {
+    vertical-align: middle;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* tbody */
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+.x_td_align_left {
+    text-align: left;
+}
+.x_td_align_center {
+    text-align: center;
+}
+.x_td_align_right {
+    text-align: right;
+}
+
+/* tablesorter */
+th.headerSortUp {
+    background-color: lavender;
+}
+th.headerSortDown {
+    background-color: lavenderblush;
+}
