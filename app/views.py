@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+from .models import Song, Genre, KeyLevel
+
+
 def main(request):
     song_list = [  # kari
         { 'id': 1, 'name': 'name1', 'artist': 'artist1', 'genre': 3,'key_level': 4,
@@ -8,6 +11,6 @@ def main(request):
     ]
 
     d = {
-        'song_list': song_list,
+        'song_list': Song.objects.all(),
     }
     return render(request, 'main.html', d)
