@@ -50,15 +50,15 @@ Song List
                 <tr>
                     <td class="x_td_align_right">{{ song.id }}</td>
                     <td class="x_td_align_left">{{ song.name }}</td>
-                    <td class="x_td_align_left">{{ song.artist }}</td>
-                    <td class="x_td_align_left">{{ song.genre_id }}</td> <!-- TODO enum -->
-                    <td class="x_td_align_center">{{ song.key_level_id }}</td> <!-- TODO enum -->
-                    <td class="x_td_align_center">{{ song.key_min }}</td> <!-- TODO enum? -->
-                    <td class="x_td_align_center">{{ song.key_freq_min }}</td> <!-- TODO enum? -->
-                    <td class="x_td_align_center">{{ song.key_freq_max }}</td> <!-- TODO enum? -->
-                    <td class="x_td_align_center">{{ song.key_max }}</td> <!-- TODO enum? -->
-                    <td class="x_td_align_center">{{ song.rank }}</td> <!-- TODO enum -->
-                    <td class="x_td_align_left">{{ song.link }}</td> <!-- TODO -->
+                    <td class="x_td_align_left">{{ song.artist|filter_none }}</td>
+                    <td class="x_td_align_left">{{ song.genre_id|filter_none }}</td>
+                    <td class="x_td_align_center">{{ song.key_level_id|filter_none }}</td>
+                    <td class="x_td_align_center">{{ song.key_min|get_key_name }}</td>
+                    <td class="x_td_align_center">{{ song.key_freq_min|get_key_name }}</td>
+                    <td class="x_td_align_center">{{ song.key_freq_max|get_key_name }}</td>
+                    <td class="x_td_align_center">{{ song.key_max|get_key_name }}</td>
+                    <td class="x_td_align_center">{{ dict_rank_name|get_item:song.rank }}</td>
+                    <td class="x_td_align_left">{{ song.link|filter_none }}</td> <!-- TODO link -->
                 </tr>
                 {% endfor %}
             </tbody>

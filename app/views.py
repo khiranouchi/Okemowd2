@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-from .models import Song, Genre, KeyLevel
+from .models import Song
+from .misc import *
 
 
 def main(request):
@@ -12,5 +13,6 @@ def main(request):
 
     d = {
         'song_list': Song.objects.all(),
+        'dict_rank_name': dict_rank_name,
     }
     return render(request, 'main.html', d)
