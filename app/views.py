@@ -60,11 +60,37 @@ def main_entry(request, song_id):
         Song.objects.filter(id=song_id).delete()
         return redirect('app:main')
 
-    # modify specified song
+    # modify specified song (update only columns specified)
     if request.method == 'PATCH':
-        pass
+        try:
+            song = Song.objects.get(id=song_id)
+        except song.DoesNotExist:
+            return HttpResponse(status=404)
+        for key, value in request.PATCH.items():
+            if key == 'name':
+                song.name = value
+            elif key == 'artist':
+                song.artist = value
+            elif key == 'genre_id':
+                song.genre_id = value
+            elif key == 'key_level_id':
+                song.key_level_id = value
+            elif key == 'key_min':
+                song.key_min = value
+            elif key == 'key_freq_min':
+                song.key_freq_min = value
+            elif key == 'key_freq_max':
+                song.key_freq_max = value
+            elif key == 'key_max':
+                song.key_max = value
+            elif key == 'rank':
+                song.rank = value
+            elif key == 'link':
+                song.link = value
+            song.save()
+        return redirect('app:main')
 
-    # update or create specified song
+    # update or create specified song (update all columns)
     if request.method == 'PUT':
         pass  # TODO only for API
 
