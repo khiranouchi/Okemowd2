@@ -22,8 +22,8 @@ class Song(models.Model):
     # id primary_key [made automatically]
     name = models.CharField(max_length=64)
     artist = models.CharField(max_length=32, null=True)
-    genre_id = models.ForeignKey(Genre, models.SET_NULL, db_index=True, null=True)
-    key_level_id = models.ForeignKey(KeyLevel, models.SET_NULL, db_index=True, null=True)
+    genre = models.ForeignKey(Genre, models.SET_NULL, db_index=True, null=True)
+    key_level = models.ForeignKey(KeyLevel, models.SET_NULL, db_index=True, null=True)
     key_min = models.IntegerField(null=True)       # 0 corresponds to tone C0
     key_freq_min = models.IntegerField(null=True)  # "
     key_freq_max = models.IntegerField(null=True) # "

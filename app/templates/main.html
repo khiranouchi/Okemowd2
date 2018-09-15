@@ -36,11 +36,11 @@ Song List
                     <th>{{ STR_SONG_PROPERTY.NAME }}</th>
                     <th>{{ STR_SONG_PROPERTY.ARTIST }}</th>
                     <th>{{ STR_SONG_PROPERTY.GENRE }}</th>
-                    <th>{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
-                    <th>{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
-                    <th>{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
-                    <th>{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
-                    <th>{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
                     <th>{{ STR_SONG_PROPERTY.RANK }}</th>
                     <th>{{ STR_SONG_PROPERTY.LINK }}</th>
                 </tr>
@@ -51,13 +51,19 @@ Song List
                     <td class="x_td_align_right">{{ song.id }}</td>
                     <td class="x_td_align_left">{{ song.name }}</td>
                     <td class="x_td_align_left">{{ song.artist|filter_none }}</td>
-                    <td class="x_td_align_left">{{ song.genre_id|filter_none }}</td>
-                    <td class="x_td_align_center">{{ song.key_level_id|filter_none }}</td>
-                    <td class="x_td_align_center">{{ song.key_min|get_key_name }}</td>
-                    <td class="x_td_align_center">{{ song.key_freq_min|get_key_name }}</td>
-                    <td class="x_td_align_center">{{ song.key_freq_max|get_key_name }}</td>
-                    <td class="x_td_align_center">{{ song.key_max|get_key_name }}</td>
-                    <td class="x_td_align_center">{{ dict_rank_name|get_item:song.rank }}</td>
+                    <td class="x_td_align_left">{{ song.genre|filter_none }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_level_id|get_key_level_rank }} }">
+                        {{ song.key_level|filter_none }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_min|filter_none_min }} }">
+                        {{ song.key_min|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_freq_min|filter_none_min }} }">
+                        {{ song.key_freq_min|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_freq_max|filter_none_min }} }">
+                        {{ song.key_freq_max|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_max|filter_none_min }} }">
+                        {{ song.key_max|get_key_name }}</td>
+                    <td class="x_td_align_center">
+                        {{ dict_rank_name|get_item:song.rank }}</td>
                     <td class="x_td_align_left">{{ song.link|filter_none }}</td> <!-- TODO link -->
                 </tr>
                 {% endfor %}
