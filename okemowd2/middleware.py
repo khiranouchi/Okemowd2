@@ -21,6 +21,9 @@ class PutParsingMiddleware(MiddlewareMixin):
 
             request.PUT = request.POST
 
+        if request.method == "POST" and request.content_type != "application/json":
+            request.PUT = request.POST
+
 
 class PatchParsingMiddleware(MiddlewareMixin):
     def process_request(self, request):
@@ -37,6 +40,9 @@ class PatchParsingMiddleware(MiddlewareMixin):
                 request._load_post_and_files()
                 request.META['REQUEST_METHOD'] = 'PATCH'
 
+            request.PATCH = request.POST
+
+        if request.method == "POST" and request.content_type != "application/json":
             request.PATCH = request.POST
 
 

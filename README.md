@@ -7,14 +7,15 @@ Requirements
 --------
 + Python  3.6.1
 + Django  2.1.1
++ django-method-override  1.0.3
 
 Install and Run
 --------
-### Django
 
-Install Django with
+Install Django and django-method-override with
 
     pip install django
+    pip install django-method-override
 
 Run server with
 

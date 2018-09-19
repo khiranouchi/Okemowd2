@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'method_override',
     'app',
 ]
 
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'method_override.middleware.MethodOverrideMiddleware',
     'middleware.PutParsingMiddleware',
     'middleware.PatchParsingMiddleware',
     'middleware.JSONParsingMiddleware',
