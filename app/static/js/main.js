@@ -91,3 +91,14 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
         )
     }
 }
+
+/*
+ * Return true if key is the key to drive switching to input/select mode (F2 / Space / I / A).
+ * @param {Object} event - event object
+ */
+function IsKeyDriveModeOn(event){
+    if(event.keyCode === 113 || event.keyCode === 32 || event.keyCode === 73 || event.keyCode === 65){
+        return true;
+    }
+    return false;
+}
