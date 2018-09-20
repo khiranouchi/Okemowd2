@@ -88,7 +88,7 @@ def main_entry(request, song_id):
             elif key == 'link':
                 song.link = value
             song.save()
-        return redirect('app:main')
+        return HttpResponse(status=204)
 
     # update or create specified song (update all columns)
     if request.method == 'PUT':

@@ -57,8 +57,12 @@ Song List
                         </form>
                     </td>
                     <td class="x_td_align_right">{{ song.id }}</td>
-                    <td class="x_td_align_left">{{ song.name }}</td>
-                    <td class="x_td_align_left">{{ song.artist|filter_none }}</td>
+                    <td class="x_td_align_left"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name')"
+                    >{{ song.name }}</td>
+                    <td class="x_td_align_left"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"
+                    >{{ song.artist|filter_none }}</td>
                     <td class="x_td_align_left">{{ song.genre|filter_none }}</td>
                     <td class="x_td_align_center {sortValue: {{ song.key_level_id|get_key_level_rank }} }">
                         {{ song.key_level|filter_none }}</td>
@@ -72,7 +76,9 @@ Song List
                         {{ song.key_max|get_key_name }}</td>
                     <td class="x_td_align_center">
                         {{ dict_rank_name|get_item:song.rank }}</td>
-                    <td class="x_td_align_left">{{ song.link|filter_none }}</td> <!-- TODO link -->
+                    <td class="x_td_align_left"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')"
+                    >{{ song.link|filter_none }}</td> <!-- TODO link -->
                 </tr>
                 {% endfor %}
             </tbody>
@@ -82,6 +88,7 @@ Song List
 </div>
 
 <script>
+// activate tablesorter
 $(document).ready(function(){
     $("#table_song_list").tablesorter();
 });
