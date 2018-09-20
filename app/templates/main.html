@@ -25,6 +25,7 @@ Song List
     <!-- Select visible column -->
     <div>
         Select visible column TODO
+        <input type="text" autocomplete="on" list="datalist_rank">
     </div>
 
     <!-- Table -->
@@ -74,8 +75,9 @@ Song List
                         {{ song.key_freq_max|get_key_name }}</td>
                     <td class="x_td_align_center {sortValue: {{ song.key_max|filter_none_min }} }">
                         {{ song.key_max|get_key_name }}</td>
-                    <td class="x_td_align_center">
-                        {{ dict_rank_name|get_item:song.rank }}</td>
+                    <td class="x_td_align_center"
+                        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')"
+                    >{{ dict_rank_name|get_item:song.rank }}</td>
                     <td class="x_td_align_left"
                         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')"
                     >{{ song.link|filter_none }}</td> <!-- TODO link -->
@@ -86,6 +88,12 @@ Song List
     </div>
 
 </div>
+
+<datalist id="datalist_rank">
+    {% for key,value in dict_rank_name.items %}
+    <option id="{{ key }}" value="{{ value }}">
+    {% endfor %}
+</datalist>
 
 <script>
 // activate tablesorter
