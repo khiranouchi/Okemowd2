@@ -59,7 +59,7 @@ Song List
                     </td>
                     <td class="x_td_align_right">{{ song.id }}</td>
                     <td class="x_td_align_left"
-                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name')"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)"
                     >{{ song.name }}</td>
                     <td class="x_td_align_left"
                         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"

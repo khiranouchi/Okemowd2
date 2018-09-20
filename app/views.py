@@ -67,6 +67,10 @@ def main_entry(request, song_id):
         except song.DoesNotExist:
             return HttpResponse(status=404)
         for key, value in request.PATCH.items():
+            # set None if value is empty
+            if not value:
+                value = None
+
             if key == 'name':
                 song.name = value
             elif key == 'artist':
@@ -88,6 +92,7 @@ def main_entry(request, song_id):
             elif key == 'link':
                 song.link = value
             song.save()
+
         return HttpResponse(status=204)
 
     # update or create specified song (update all columns)
