@@ -53,6 +53,18 @@ Usage
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
 
+### Page
+
+**Keyboard Shortcuts**
+
+|Key |Function |
+|---|---|
+| *Tab* | Move to the next cell |
+| *Shift+Tab* | Move to the previos cell |
+| *F2* / *Space* / *I* / *A* | Start input-mode of cell |
+| *Esc* / *Ctrl+[* | End input-mode of cell |
+
+(The others are TODO)
 
 
 
