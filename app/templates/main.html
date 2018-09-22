@@ -25,7 +25,6 @@ Song List
     <!-- Select visible column -->
     <div>
         Select visible column TODO
-        <input type="text" autocomplete="on" list="datalist_rank">
     </div>
 
     <!-- Table -->
@@ -60,13 +59,11 @@ Song List
                     <td class="x_td_align_right">{{ song.id }}</td>
                     <td class="x_td_align_left" tabindex="0"
                         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)"
-                        onkeydown="if(IsKeyDriveModeOn(event)){
-                                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)}"
+                        onkeydown="TableTdOnKeyDown(this, '{% url 'app:main_entry' song.id %}', 'name')"
                     >{{ song.name }}</td>
                     <td class="x_td_align_left" tabindex="0"
                         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"
-                        onkeydown="if(IsKeyDriveModeOn(event)){
-                                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')}"
+                        onkeydown="TableTdOnKeyDown(this, '{% url 'app:main_entry' song.id %}', 'artist')"
                     >{{ song.artist|filter_none }}</td>
                     <td class="x_td_align_left">{{ song.genre|filter_none }}</td>
                     <td class="x_td_align_center {sortValue: {{ song.key_level_id|get_key_level_rank }} }">
@@ -81,13 +78,11 @@ Song List
                         {{ song.key_max|get_key_name }}</td>
                     <td class="x_td_align_center" tabindex="0"
                         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')"
-                        onkeydown="if(IsKeyDriveModeOn(event)){
-                                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'rank')}"
+                        onkeydown="TableTdOnKeyDown(this, '{% url 'app:main_entry' song.id %}', 'rank')"
                     >{{ dict_rank_name|get_item:song.rank }}</td>
                     <td class="x_td_align_left" tabindex="0"
                         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')"
-                        onkeydown="if(IsKeyDriveModeOn(event)){
-                                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')}"
+                        onkeydown="TableTdOnKeyDown(this, '{% url 'app:main_entry' song.id %}', 'link')"
                     >{{ song.link|filter_none }}</td> <!-- TODO link -->
                 </tr>
                 {% endfor %}
@@ -104,10 +99,28 @@ Song List
 </datalist>
 
 <script>
+
 // activate tablesorter
 $(document).ready(function(){
     $("#table_song_list").tablesorter();
 });
+
+// function used in <td> in song list table
+function TableTdOnKeyDown(obj, path, fieldName){
+    if(IsKeyDriveModeOn(event)){
+        SwitchInputMode(obj, path, fieldName);
+    }
+}
+
+// function used in <input> in <td> in song list table (<input> appears only when input/select-mode)
+function TableTdInputOnKeyDown(obj){
+    if(IsKeyDriveModeOff(event)){
+        var parent = $(obj).parent();
+        obj.blur();
+        parent.focus();
+    }
+}
+
 </script>
 
 {% endblock %}

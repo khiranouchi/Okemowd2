@@ -9,7 +9,9 @@
 function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
-        $(obj).html('<input type="text" value="'+$(obj).text()+'">'); // use current text as default value
+        $(obj).html('<input type="text" '
+                    + 'onkeydown="TableTdInputOnKeyDown(this)" '
+                    + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().blur(
             // listener which activates when the focus is lost
             function(){
@@ -49,8 +51,10 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
 function SwitchSelectMode(obj, path, fieldName, datalistTagId){
     if(!$(obj).hasClass('select_mode_on')){
         $(obj).addClass('select_mode_on');
-        $(obj).html('<input type="text" autocomplete="on" list='
-                    + datalistTagId + ' value="'+$(obj).text()+'">'); // use current text as default value
+        $(obj).html('<input type="text" '
+                    + 'autocomplete="on" list=' + datalistTagId + ' '
+                    + 'onkeydown="TableTdInputOnKeyDown(this)" '
+                    + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().blur(
             // listener which activates when the focus is lost
             function(){
@@ -98,6 +102,17 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
  */
 function IsKeyDriveModeOn(event){
     if(event.keyCode === 113 || event.keyCode === 32 || event.keyCode === 73 || event.keyCode === 65){
+        return true;
+    }
+    return false;
+}
+
+/*
+ * Return true if key is the key to drive switching to normal mode (Esc / Ctrl+[)
+ * @param {Object} event - event object
+ */
+function IsKeyDriveModeOff(event){
+    if(event.keyCode === 27 || event.ctrlKey && event.keyCode === 219){
         return true;
     }
     return false;
