@@ -7,7 +7,7 @@ from .misc import *
 
 @csrf_exempt
 def main(request):
-    # get all song (view template)
+    # get all song
     if request.method == 'GET':
         d = {
             'song_list': Song.objects.all(),
@@ -25,13 +25,17 @@ def main(request):
         # genre_id is foreign-key which must exist in table Genre
         genre_id = request.POST.get('genre_id')
         if genre_id is not None:
-            if Genre.objects.filter(id=genre_id).first() is None:
+            try:
+                Genre.objects.get(id=genre_id)
+            except Genre.DoesNotExist:
                 return HttpResponse(status=400)
 
         # keylevel_id is foreign-key which must exist in table KeyLevel
         key_level_id = request.POST.get('key_level_id')
         if key_level_id is not None:
-            if KeyLevel.objects.filter(id=key_level_id).first() is None:
+            try:
+                KeyLevel.objects.get(id=key_level_id)
+            except KeyLevel.DoesNotExist:
                 return HttpResponse(status=400)
 
         song = Song.objects.create(
@@ -39,15 +43,19 @@ def main(request):
             artist = request.POST.get('artist'),
             genre_id = genre_id,
             key_level_id = key_level_id,
-            key_min = request.POST.get('key_min'), #ttt
-            key_freq_min = request.POST.get('key_freq_min'),  # ttt
-            key_freq_max = request.POST.get('key_freq_max'),  # ttt
-            key_max = request.POST.get('key_max'),  # ttt
-            rank = request.POST.get('rank'),  #ttt
+            key_min = request.POST.get('key_min'),
+            key_freq_min = request.POST.get('key_freq_min'),
+            key_freq_max = request.POST.get('key_freq_max'),
+            key_max = request.POST.get('key_max'),
+            rank = request.POST.get('rank'),
             link = request.POST.get('link'),
         )
 
-        return HttpResponse(status=201, content_type='application/json', content='{"song_id":' + str(song.id) + '}')
+        d = {
+            'song': song,
+            'path': reverse('app:main_entry', args=[song.id]),
+        }
+        return render(request, 'song_table_line.html', d, status=201)
 
     return HttpResponse(status=501)
 
@@ -56,12 +64,13 @@ def main(request):
 def main_entry(request, song_id):
     # get specified song
     if request.method == 'GET':
-        song = {
-            'id': song_id,
-        }
+        try:
+            song = Song.objects.get(id=song_id)
+        except Song.DoesNotExist:
+            return HttpResponse(status=404)
         d = {
             'song': song,
-            'path': reverse('app:main_entry', args=[song_id]),
+            'path': reverse('app:main_entry', args=[song.id]),
         }
         return render(request, 'song_table_line.html', d)
 
@@ -74,7 +83,7 @@ def main_entry(request, song_id):
     if request.method == 'PATCH':
         try:
             song = Song.objects.get(id=song_id)
-        except song.DoesNotExist:
+        except Song.DoesNotExist:
             return HttpResponse(status=404)
         for key, value in request.PATCH.items():
             # set None if value is empty

@@ -172,15 +172,7 @@ function InsertSong(tableId, path){
         async: true
     }).done(function(content){
         // insert table line in html
-        songId = content['song_id'];
-        $('#' + tableId).append('<tr id="id_tmp_insert_song"></tr>');
-        $.ajax({
-            type: 'GET',
-            url: path + songId + '/',
-            async: true
-        }).done(function(content){
-            $('#id_tmp_insert_song').html(content).removeAttr('id');
-        });
+        $('#' + tableId).append(content);
         $('#button_insert_error_message').html('');
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
