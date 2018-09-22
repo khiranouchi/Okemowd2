@@ -155,3 +155,34 @@ function DeleteSong(obj, path){
         async: true
     });
 }
+
+/*
+ * Insert one empty song (one table line).
+ * Also send http request to Post new song.
+ * @param {Object} tableId - id of the table in which you want to insert line
+ * @param {String} path - url path to POST and GET
+ */
+function InsertSong(tableId, path){
+    var songId;
+    // insert data in database and get song-id
+    $.ajax({
+        type: 'POST',
+        url: path,
+        data: {'name': '(new_song)'},
+        async: true
+    }).done(function(content){
+        // insert table line in html
+        songId = content['song_id'];
+        $('#' + tableId).append('<tr id="id_tmp_insert_song"></tr>');
+        $.ajax({
+            type: 'GET',
+            url: path + songId + '/',
+            async: true
+        }).done(function(content){
+            $('#id_tmp_insert_song').html(content).removeAttr('id');
+        });
+        $('#button_insert_error_message').html('');
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        $('#button_insert_error_message').html('failed');
+	});
+}

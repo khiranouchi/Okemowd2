@@ -1,0 +1,30 @@
+<td>
+    <button class="btn" onclick="DeleteSong(this, '{{ path }}')">x</button>
+</td>
+<td class="x_td_align_right">{{ song.id }}</td>
+<td class="x_td_align_left" tabindex="0"
+    onclick="SwitchInputMode(this, '{{ path }}', 'name', false)"
+    onkeyup="if(IsKeyDriveModeOn(event)){
+             SwitchInputMode(this,'{{ path }}', 'name', false)}"
+>(new_song)</td>
+<td class="x_td_align_left" tabindex="0"
+    onclick="SwitchInputMode(this, '{{ path }}', 'artist')"
+    onkeyup="if(IsKeyDriveModeOn(event)){
+             SwitchInputMode(this, '{{ path }}', 'artist')}"
+></td>
+<td class="x_td_align_left"></td>
+<td class="x_td_align_center {sortValue: 999 }"></td>
+<td class="x_td_align_center {sortValue: -999 }"></td>
+<td class="x_td_align_center {sortValue: -999 }"></td>
+<td class="x_td_align_center {sortValue: -999 }"></td>
+<td class="x_td_align_center {sortValue: -999 }"></td>
+<td class="x_td_align_center" tabindex="0"
+    onclick="SwitchSelectMode(this, '{{ path }}', 'rank', 'datalist_rank')"
+    onkeyup="if(IsKeyDriveModeOn(event)){
+             SwitchSelectMode(this, '{{ path }}', 'rank', 'datalist_rank')}"
+></td>
+<td class="x_td_align_left" tabindex="0"
+    onclick="SwitchInputMode(this, '{{ path }}', 'link')"
+    onkeyup="if(IsKeyDriveModeOn(event)){
+             SwitchInputMode(this, '{{ path }}', 'link')}"
+></td> <!-- TODO link -->

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, HttpResponse, reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Genre, KeyLevel, Song
@@ -34,7 +34,7 @@ def main(request):
             if KeyLevel.objects.filter(id=key_level_id).first() is None:
                 return HttpResponse(status=400)
 
-        Song.objects.create(
+        song = Song.objects.create(
             name = name,
             artist = request.POST.get('artist'),
             genre_id = genre_id,
@@ -46,14 +46,24 @@ def main(request):
             rank = request.POST.get('rank'),  #ttt
             link = request.POST.get('link'),
         )
-        return redirect('app:main')
+
+        return HttpResponse(status=201, content_type='application/json', content='{"song_id":' + str(song.id) + '}')
+
+    return HttpResponse(status=501)
 
 
 @csrf_exempt
 def main_entry(request, song_id):
     # get specified song
     if request.method == 'GET':
-        pass  # TODO only for API
+        song = {
+            'id': song_id,
+        }
+        d = {
+            'song': song,
+            'path': reverse('app:main_entry', args=[song_id]),
+        }
+        return render(request, 'song_table_line.html', d)
 
     # delete specified song
     if request.method == 'DELETE':
@@ -99,4 +109,4 @@ def main_entry(request, song_id):
     if request.method == 'PUT':
         pass  # TODO only for API
 
-    return redirect('app:main')
+    return HttpResponse(status=501)

@@ -90,6 +90,16 @@ Song List
         </table>
     </div>
 
+    <!-- Buttons -->
+    <div>
+        <div>
+            <button class="btn" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
+            >{{ STR_BUTTON_LABEL.ADD_EMPTY_SONG }}</button>
+            <p id="button_insert_error_message"></p>
+        </div>
+
+    </div>
+
 </div>
 
 <datalist id="datalist_rank">

@@ -14,4 +14,7 @@ def get_constants(request):
             'RANK': 'Rank',
             'LINK': 'Sound Link',
         },
+        'STR_BUTTON_LABEL': {
+            'ADD_EMPTY_SONG': 'Add Song',
+        }
     }
