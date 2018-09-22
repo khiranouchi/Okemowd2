@@ -1,3 +1,7 @@
+/*****************************************************************************************************************/
+/*** About Input-mode/Select-mode of Table Cell ******************************************************************/
+/*****************************************************************************************************************/
+
 /**
  * Switch normal-text(eg. <...>aaa</...>) and input-mode(eg. <...><input type="text" value="aaa"></...>).
  * Also send http request to PATCH modification of text.
@@ -128,4 +132,26 @@ function InputOnKeyDown(obj){
         obj.blur();
         parent.focus();
     }
+}
+
+
+
+/*****************************************************************************************************************/
+/*** About Insert/Delete of Table Line ***************************************************************************/
+/*****************************************************************************************************************/
+
+/* Delete one song (one table line).
+ * Also send http request to DELETE the song.
+ * @param {Object} obj - child object of the tr-object which you want to be deleted
+ * @param {String} path - url path to DELETE
+ */
+function DeleteSong(obj, path){
+    // delete table line in html
+    $(obj).closest("tr").remove();
+    // delete data in database
+    $.ajax({
+        type: 'DELETE',
+        url: path,
+        async: true
+    });
 }

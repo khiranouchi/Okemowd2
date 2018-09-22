@@ -50,11 +50,7 @@ Song List
                 {% for song in song_list %}
                 <tr>
                     <td>
-                        {% load method_override %}
-                        <form method="post" action="{% url 'app:main_entry' song.id %}">
-                            <input type="submit" value="x" class="btn">
-                            {% method_override 'DELETE' %}
-                        </form>
+                        <button class="btn" onclick="DeleteSong(this, '{% url 'app:main_entry' song.id %}')">x</button>
                     </td>
                     <td class="x_td_align_right">{{ song.id }}</td>
                     <td class="x_td_align_left" tabindex="0"

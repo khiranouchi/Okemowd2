@@ -58,7 +58,7 @@ def main_entry(request, song_id):
     # delete specified song
     if request.method == 'DELETE':
         Song.objects.filter(id=song_id).delete()
-        return redirect('app:main')
+        return HttpResponse(status=204)
 
     # modify specified song (update only columns specified)
     if request.method == 'PATCH':
