@@ -10,7 +10,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
-                    + 'onkeydown="TableTdInputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().blur(
             // listener which activates when the focus is lost
@@ -53,7 +53,7 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
                     + 'autocomplete="on" list=' + datalistTagId + ' '
-                    + 'onkeydown="TableTdInputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().blur(
             // listener which activates when the focus is lost
@@ -116,4 +116,16 @@ function IsKeyDriveModeOff(event){
         return true;
     }
     return false;
+}
+
+/*
+ * Function used in input-tag in SwitchInputMode()/SwitchSelectMode()
+ * @param {Object} obj - object of input-tag
+ */
+function InputOnKeyDown(obj){
+    if(IsKeyDriveModeOff(event)){
+        var parent = $(obj).parent();
+        obj.blur();
+        parent.focus();
+    }
 }
