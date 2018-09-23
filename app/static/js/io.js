@@ -13,3 +13,21 @@ function SwitchIoMode(obj){
     $('.' + activeClass).siblings().hide();
     $('.' + activeClass).show();
 }
+
+/**
+ * Load csv of export textarea by sending http request to GET all song data.
+ * @param {String} textareaId - id of the export textarea
+ * @param {String} path - url path to GET
+ */
+function LoadExportCsv(textareaId, path){
+    $.ajax({
+        type: 'GET',
+        url: path,
+        headers: { Accept: "text/csv" },
+        async: true
+    }).done(function(content){
+        $('#' + textareaId).val(content);
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        $('#' + textareaId).val('Failed loading.');
+	});
+}

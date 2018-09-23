@@ -30,3 +30,7 @@ class Song(models.Model):
     key_max = models.IntegerField(null=True)      # "
     rank = models.IntegerField(null=True)  # 1,2,3,others
     link = models.TextField(null=True)
+
+    def values(self):
+        return [self.name, self.artist, self.genre_id, self.key_level_id,
+                self.key_min, self.key_freq_min, self.key_freq_max, self.key_max, self.rank, self.link]

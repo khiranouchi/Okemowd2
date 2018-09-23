@@ -161,7 +161,7 @@ function DeleteSong(obj, path){
  * Insert one empty song (one table line).
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line
- * @param {String} path - url path to POST and GET
+ * @param {String} path - url path to POST
  */
 function InsertSong(tableId, path){
     var songId;

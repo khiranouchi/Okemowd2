@@ -22,7 +22,7 @@ Import and Export
 <div class="x_part">
     <div>
         <textarea class="z_io_import_append z_io_import_replace">dummy-i</textarea>
-        <textarea class="z_io_export">dummy-e</textarea>
+        <textarea id="textarea_export" class="z_io_export" readonly></textarea>
     </div>
 </div>
 
@@ -43,6 +43,7 @@ Import and Export
 // initialize selection (select import_append)
 $(document).ready(function(){
     SwitchIoMode($('#import_append').get());
+    LoadExportCsv('textarea_export', {{ path }});
 });
 </script>
 

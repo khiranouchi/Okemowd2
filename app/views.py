@@ -1,3 +1,5 @@
+import csv
+
 from django.shortcuts import render, HttpResponse, reverse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -9,11 +11,18 @@ from .misc import *
 def main(request):
     # get all song
     if request.method == 'GET':
-        d = {
-            'song_list': Song.objects.all(),
-            'dict_rank_name': dict_rank_name,
-        }
-        return render(request, 'main.html', d)
+        if request.META.get('HTTP_ACCEPT') == 'text/csv':
+            response = HttpResponse(content_type='text/csv')
+            writer = csv.writer(response)
+            for song in Song.objects.all():
+                writer.writerow(song.values())
+            return response
+        else:
+            d = {
+                'song_list': Song.objects.all(),
+                'dict_rank_name': dict_rank_name,
+            }
+            return render(request, 'main.html', d)
 
     # create new song
     if request.method == 'POST':
@@ -124,6 +133,9 @@ def main_entry(request, song_id):
 @csrf_exempt
 def main_io(request):
     if request.method == 'GET':
-        return render(request, 'io.html')
+        d = {
+            'path': reverse('app:main'),
+        }
+        return render(request, 'io.html', d)
 
     return HttpResponse(status=501)
