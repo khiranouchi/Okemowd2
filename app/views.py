@@ -119,3 +119,11 @@ def main_entry(request, song_id):
         pass  # TODO only for API
 
     return HttpResponse(status=501)
+
+
+@csrf_exempt
+def main_io(request):
+    if request.method == 'GET':
+        return render(request, 'io.html')
+
+    return HttpResponse(status=501)

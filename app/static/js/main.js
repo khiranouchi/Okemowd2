@@ -100,7 +100,7 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
     }
 }
 
-/*
+/**
  * Return true if key is the key to drive switching to input/select mode (F2 / Space / I / A).
  * @param {Object} event - event object
  */
@@ -111,7 +111,7 @@ function IsKeyDriveModeOn(event){
     return false;
 }
 
-/*
+/**
  * Return true if key is the key to drive switching to normal mode (Esc / Ctrl+[)
  * @param {Object} event - event object
  */
@@ -122,7 +122,7 @@ function IsKeyDriveModeOff(event){
     return false;
 }
 
-/*
+/**
  * Function used in input-tag in SwitchInputMode()/SwitchSelectMode()
  * @param {Object} obj - object of input-tag
  */
@@ -140,7 +140,8 @@ function InputOnKeyDown(obj){
 /*** About Insert/Delete of Table Line ***************************************************************************/
 /*****************************************************************************************************************/
 
-/* Delete one song (one table line).
+/**
+ * Delete one song (one table line).
  * Also send http request to DELETE the song.
  * @param {Object} obj - child object of the tr-object which you want to be deleted
  * @param {String} path - url path to DELETE
@@ -156,7 +157,7 @@ function DeleteSong(obj, path){
     });
 }
 
-/*
+/**
  * Insert one empty song (one table line).
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line

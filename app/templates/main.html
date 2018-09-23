@@ -93,11 +93,14 @@ Song List
     <!-- Buttons -->
     <div>
         <div>
-            <button class="btn" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
+            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
             >{{ STR_BUTTON_LABEL.ADD_EMPTY_SONG }}</button>
             <p id="button_insert_error_message"></p>
         </div>
-
+        <div>
+            <a class="btn btn-default" role="button" href="{% url 'app:main_io' %}"
+            >{{ STR_BUTTON_LABEL.IMPORT_AND_EXPORT }}</a>
+        </div>
     </div>
 
 </div>

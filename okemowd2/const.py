@@ -16,5 +16,12 @@ def get_constants(request):
         },
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',
+            'IMPORT_AND_EXPORT': 'Import and Export',
+            'IMPORT_APPEND': 'Import(Append)',
+            'IMPORT_REPLACE': 'Import(Replace)',
+            'EXPORT': 'Export',
+            'IMPORT_APPEND_SUBMIT': 'Append',
+            'IMPORT_REPLACE_SUBMIT': 'Replace',
+            'EXPORT_COPY': 'Copy',
         }
     }
