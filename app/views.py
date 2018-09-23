@@ -60,9 +60,11 @@ def main(request):
             link = request.POST.get('link'),
         )
 
+        song_list = [song]
+        path_list = reverse('app:main_entry', args=[song.id])
         d = {
-            'song': song,
-            'path': reverse('app:main_entry', args=[song.id]),
+            'song_and_path_list': zip(song_list, path_list),
+            'dict_rank_name': dict_rank_name,
         }
         return render(request, 'song_table_line.html', d, status=201)
 
@@ -77,9 +79,11 @@ def main_entry(request, song_id):
             song = Song.objects.get(id=song_id)
         except Song.DoesNotExist:
             return HttpResponse(status=404)
+        song_list = [song]
+        path_list = [reverse('app:main_entry', args=[song.id])]
         d = {
-            'song': song,
-            'path': reverse('app:main_entry', args=[song.id]),
+            'song_and_path_list': zip(song_list, path_list),
+            'dict_rank_name': dict_rank_name,
         }
         return render(request, 'song_table_line.html', d)
 

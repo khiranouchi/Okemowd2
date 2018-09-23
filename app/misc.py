@@ -36,8 +36,9 @@ def filter_none_min(item_int):
 # trans key into item of dictionary (get '' if key does not exist)
 @register.filter
 def get_item(dictionary, key):
-    item = dictionary.get(key)
-    return filter_none(item)
+    if key is None:
+        return ''
+    return dictionary.get(int(key))
 
 
 # trans integer value into key name (get '' if key does not exist)
@@ -46,7 +47,7 @@ def get_item(dictionary, key):
 def get_key_name(key_int):
     if key_int is None:
         return ''
-    ret = dict_pitch_name[key_int % 12] + str(key_int // 12)
+    ret = dict_pitch_name[int(key_int) % 12] + str(int(key_int) // 12)
     return ret
 
 
