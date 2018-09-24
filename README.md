@@ -29,12 +29,14 @@ Usage
 
 **Methods**
 
-|Method |Path |Role |
-|---|---|---|
-| POST | /main/ | create song |
-| GET | /main/ | read all songs |
-| PATCH | /main/*song_id*/ | modify specified song |
-| DELETE | /main/*song_id*/ | delete specified song |
+|Method |Path |Role |Type(Request) |Type(Response)
+|---|---|---|---|---|
+| POST | /main/ | create song | 'text/csv' or normal | others |
+| GET | /main/ | read all songs | - | 'text/csv' or others |
+| DELETE | /main/ | delete all songs | - | (no content) |
+| GET | /main/*song_id*/ | read specified song | - | others |
+| PATCH | /main/*song_id*/ | modify specified song | normal | (no content) |
+| DELETE | /main/*song_id*/ | delete specified song | - | (no content) |
 
 (The others are TODO)
 
@@ -52,6 +54,9 @@ Usage
 | ***key_max*** | integer | highest tone's key | 0 corresponds to tone C0 |
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
+
+Song name is neccessary. <br>
+Fields can be too few or too many in CSV format.
 
 ### Page
 
