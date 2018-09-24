@@ -1,21 +1,21 @@
 Karaoke Song Management System
 ============
-You can make song list.
-(Detail is TODO)
+Web Application. <br>
+You can make song list
+and keep song name, artist name, genre, minimum key, maximum key and so on. <br>
+You can manage your song list both by html page and by http API.
 
 Requirements
 --------
 + Python  3.6.1
 + Django  2.1.1
-+ django-method-override  1.0.3
 
 Install and Run
 --------
 
-Install Django and django-method-override with
+Install Django with
 
     pip install django
-    pip install django-method-override
 
 Run server with
 
@@ -45,6 +45,7 @@ Usage
 |Field name |Type |Detail |Rule |
 |---|---|---|---|
 | ***name*** | string | song name | less than 65 characters |
+| ***name_ruby*** | string | song name ruby | less than 129 characters |
 | ***artist*** | string | artist name | less than 33 characters |
 | ***genre_id*** | integer | genre | must be in the database table "Genre" |
 | ***key_level_id*** | integer | type of tone height | must be in the database table "KeyLevel" |
@@ -55,7 +56,7 @@ Usage
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
 
-Song name is neccessary. <br>
+***name*** and ***name_ruby*** are neccessary. <br>
 Fields can be too few or too many in CSV format.
 
 ### Page
