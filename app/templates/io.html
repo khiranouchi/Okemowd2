@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/io.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+Import and Export
+{% endblock %}
+
+{% block body %}
+
+<!-- Switch i/o mode -->
+<div class="x_part">
+    <div class="btn-group">
+        <button id="import_append" name="z_io_import_append" class="btn btn-default" onclick="SwitchIoMode(this)"
+        >{{ STR_BUTTON_LABEL.IMPORT_APPEND }}</button>
+        <button id="import_replace" name="z_io_import_replace" class="btn btn-default" onclick="SwitchIoMode(this)"
+        >{{ STR_BUTTON_LABEL.IMPORT_REPLACE }}</button>
+        <button id="export" name="z_io_export" class="btn btn-default" onclick="SwitchIoMode(this)"
+        >{{ STR_BUTTON_LABEL.EXPORT }}</button>
+    </div>
+</div>
+
+<!-- Text area -->
+<div class="x_part">
+    <div>
+        <textarea id="textarea_import" class="z_io_import_append z_io_import_replace"></textarea>
+        <textarea id="textarea_export" class="z_io_export" readonly></textarea>
+    </div>
+</div>
+
+<!-- Submit/Copy button -->
+<div class="x_part">
+    <div>
+        <button class="z_io_import_append btn btn-default"
+                onclick="SaveImportCsv('textarea_import', {{ path }})"
+        >{{ STR_BUTTON_LABEL.IMPORT_APPEND_SUBMIT }}</button>
+        <button class="z_io_import_replace btn btn-default"
+                onclick="SaveImportCsv('textarea_import', {{ path }}, true)"
+        >{{ STR_BUTTON_LABEL.IMPORT_REPLACE_SUBMIT }}</button>
+        <button class="z_io_export btn btn-default"
+        >{{ STR_BUTTON_LABEL.EXPORT_COPY }}</button>
+        <p id="button_submit_error_message" class="z_io_import_append z_io_import_replace z_io_export"></p>
+    </div>
+</div>
+
+<script>
+// initialize selection (select import_append)
+$(document).ready(function(){
+    SwitchIoMode($('#import_append').get());
+    LoadExportCsv('textarea_export', {{ path }});
+});
+</script>
+
+{% endblock %}
