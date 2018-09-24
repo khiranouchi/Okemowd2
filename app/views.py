@@ -9,7 +9,7 @@ from .misc import *
 
 @csrf_exempt
 def main(request):
-    # get all song
+    # get all songs
     if request.method == 'GET':
         if request.META.get('HTTP_ACCEPT') == 'text/csv':
             response = HttpResponse(content_type='text/csv')
@@ -101,6 +101,11 @@ def main(request):
             'dict_rank_name': dict_rank_name,
         }
         return render(request, 'song_table_line.html', d, status=201)
+
+    # delete all songs
+    if request.method == 'DELETE':
+        Song.objects.all().delete()
+        return HttpResponse(status=204)
 
     return HttpResponse(status=501)
 

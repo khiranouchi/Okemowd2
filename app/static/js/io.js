@@ -34,12 +34,27 @@ function LoadExportCsv(textareaId, path){
 
 /**
  * POST multiple songs from imported csv.
- * If trunc is true, DELETE all existing songs before POST. <- TODO
+ * If trunc is true, DELETE ALL EXISTING SONGS before POST.
  * @param {String} textareaId - id of the import textarea
- * @param {String} path - url path to POST
- * trunc <- TODO
+ * @param {String} path - url path to POST and DELETE
+ * @param {boolean} trunc - set true if you want to DELETE ALL EXISTING SONGS before POST
  */
 function SaveImportCsv(textareaId, path, trunc=false){
+    if(trunc){
+        $.ajax({
+            type: 'DELETE',
+            url: path,
+            async: true
+        }).done(function(content){
+	        SaveImportCsvSavePart(textareaId, path);
+        }).fail(function(jqXHR, textStatus, errorThrown){
+            $('#button_submit_error_message').html('failed');
+        });
+    }else{
+	    SaveImportCsvSavePart(textareaId, path);
+	}
+}
+function SaveImportCsvSavePart(textareaId, path){
     $.ajax({
         type: 'POST',
         url: path,
