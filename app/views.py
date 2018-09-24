@@ -26,42 +26,76 @@ def main(request):
 
     # create new song
     if request.method == 'POST':
-        # name has nonnull restriction (also filter empty string here)
-        name = request.POST.get('name')
-        if name is None or not name:
-            return HttpResponse(status=400)
+        song_data_list = None
 
-        # genre_id is foreign-key which must exist in table Genre
-        genre_id = request.POST.get('genre_id')
-        if genre_id is not None:
-            try:
-                Genre.objects.get(id=genre_id)
-            except Genre.DoesNotExist:
+        # get multiple songs' data
+        if request.content_type == 'text/csv':
+            body_str = request.body.decode()  # request.body is byte-string
+            song_data_list = csv.reader(body_str.strip().splitlines())
+        else:
+            song_data = [
+                request.POST.get('name'),
+                request.POST.get('artist'),
+                request.POST.get('genre_id'),
+                request.POST.get('key_level_id'),
+                request.POST.get('key_min'),
+                request.POST.get('key_freq_min'),
+                request.POST.get('key_freq_max'),
+                request.POST.get('key_max'),
+                request.POST.get('rank'),
+                request.POST.get('link'),
+            ]
+            song_data_list = [song_data]
+
+        # create songs from song_data_list
+        song_list = []
+        path_list = []
+        for song_data in song_data_list:
+            # filter empty string into None
+            for i in range(len(song_data)):
+                if song_data[i] is None or not song_data[i]:
+                    song_data[i] = None
+            # define undefined element as None
+            for i in range(len(song_data), 10):  # 10 is the number of fields!!!
+                song_data.append(None)
+
+            # name has nonnull restriction
+            name = song_data[0]
+            if name is None:
                 return HttpResponse(status=400)
 
-        # keylevel_id is foreign-key which must exist in table KeyLevel
-        key_level_id = request.POST.get('key_level_id')
-        if key_level_id is not None:
-            try:
-                KeyLevel.objects.get(id=key_level_id)
-            except KeyLevel.DoesNotExist:
-                return HttpResponse(status=400)
+            # genre_id is foreign-key which must exist in table Genre
+            genre_id = song_data[2]
+            if genre_id is not None:
+                try:
+                    Genre.objects.get(id=genre_id)
+                except Genre.DoesNotExist:
+                    return HttpResponse(status=400)
 
-        song = Song.objects.create(
-            name = name,
-            artist = request.POST.get('artist'),
-            genre_id = genre_id,
-            key_level_id = key_level_id,
-            key_min = request.POST.get('key_min'),
-            key_freq_min = request.POST.get('key_freq_min'),
-            key_freq_max = request.POST.get('key_freq_max'),
-            key_max = request.POST.get('key_max'),
-            rank = request.POST.get('rank'),
-            link = request.POST.get('link'),
-        )
+            # keylevel_id is foreign-key which must exist in table KeyLevel
+            key_level_id = song_data[3]
+            if key_level_id is not None:
+                try:
+                    KeyLevel.objects.get(id=key_level_id)
+                except KeyLevel.DoesNotExist:
+                    return HttpResponse(status=400)
 
-        song_list = [song]
-        path_list = reverse('app:main_entry', args=[song.id])
+            song = Song.objects.create(
+                name = name,
+                artist = song_data[1],
+                genre_id = genre_id,
+                key_level_id = key_level_id,
+                key_min = song_data[4],
+                key_freq_min = song_data[5],
+                key_freq_max = song_data[6],
+                key_max = song_data[7],
+                rank = song_data[8],
+                link = song_data[9],
+            )
+
+            song_list.append(song)
+            path_list.append(reverse('app:main_entry', args=[song.id]))
+
         d = {
             'song_and_path_list': zip(song_list, path_list),
             'dict_rank_name': dict_rank_name,
