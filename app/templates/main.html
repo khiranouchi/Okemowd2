@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
+{% block title %}
+Song List
+{% endblock %}
+
+{% block body %}
+
+<!-- Filter result -->
+<div class="x_part">
+    <div class="x_subtitle">
+        Filter
+    </div>
+    <div>
+        Filter result TODO
+    </div>
+</div>
+
+<!-- Song list -->
+<div class="x_part">
+    <div class="x_subtitle">
+        Song List
+    </div>
+
+    <!-- Select visible column -->
+    <div>
+        Select visible column TODO
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table id="table_song_list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>{{ STR_SONG_PROPERTY.ID }}</th>
+                    <th class="{sorter:'metatext'}">{{ STR_SONG_PROPERTY.NAME }}</th>
+                    <th>{{ STR_SONG_PROPERTY.NAME_RUBY }}</th>
+                    <th>{{ STR_SONG_PROPERTY.ARTIST }}</th>
+                    <th>{{ STR_SONG_PROPERTY.GENRE }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
+                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
+                    <th>{{ STR_SONG_PROPERTY.RANK }}</th>
+                    <th>{{ STR_SONG_PROPERTY.LINK }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in song_list %}
+                <tr>
+                    <td>
+                        <button class="btn" onclick="DeleteSong(this, '{% url 'app:main_entry' song.id %}')">x</button>
+                    </td>
+                    <td class="x_td_align_right">{{ song.id }}</td>
+                    <td class="x_td_align_left {sortValue: '{{ song.name_ruby }}' }" tabindex="0"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)"
+                        onkeyup="if(IsKeyDriveModeOn(event)){
+                               SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)}"
+                    >{{ song.name }}</td>
+                    <td class="x_td_align_left">{{ song.name_ruby }}</td>
+                    <td class="x_td_align_left" tabindex="0"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"
+                        onkeyup="if(IsKeyDriveModeOn(event)){
+                               SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')}"
+                    >{{ song.artist|filter_none }}</td>
+                    <td class="x_td_align_left">{{ song.genre|filter_none }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_level_id|get_key_level_rank }} }">
+                        {{ song.key_level|filter_none }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_min|filter_none_min }} }">
+                        {{ song.key_min|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_freq_min|filter_none_min }} }">
+                        {{ song.key_freq_min|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_freq_max|filter_none_min }} }">
+                        {{ song.key_freq_max|get_key_name }}</td>
+                    <td class="x_td_align_center {sortValue: {{ song.key_max|filter_none_min }} }">
+                        {{ song.key_max|get_key_name }}</td>
+                    <td class="x_td_align_center" tabindex="0"
+                        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')"
+                        onkeyup="if(IsKeyDriveModeOn(event)){
+                               SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')}"
+                    >{{ dict_rank_name|get_item:song.rank }}</td>
+                    <td class="x_td_align_left" tabindex="0"
+                        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')"
+                        onkeyup="if(IsKeyDriveModeOn(event)){
+                               SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')}"
+                    >{{ song.link|filter_none }}</td> <!-- TODO link -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Buttons -->
+    <div>
+        <div class="x_inline_block">
+            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
+            >{{ STR_BUTTON_LABEL.ADD_EMPTY_SONG }}</button>
+        </div>
+        <div class="x_inline_block">
+            <a class="btn btn-default" role="button" href="{% url 'app:main_io' %}"
+            >{{ STR_BUTTON_LABEL.IMPORT_AND_EXPORT }}</a>
+        </div>
+        <p id="button_insert_error_message" class="x_inline_block"></p>
+    </div>
+
+</div>
+
+<datalist id="datalist_rank">
+    {% for key,value in dict_rank_name.items %}
+    <option id="{{ key }}" value="{{ value }}">
+    {% endfor %}
+</datalist>
+
+<script>
+// activate tablesorter
+$(document).ready(function(){
+    $("#table_song_list").tablesorter();
+});
+</script>
+
+{% endblock %}
