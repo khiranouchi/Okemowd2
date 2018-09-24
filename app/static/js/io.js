@@ -31,3 +31,24 @@ function LoadExportCsv(textareaId, path){
         $('#' + textareaId).val('Failed loading.');
 	});
 }
+
+/**
+ * POST multiple songs from imported csv.
+ * If trunc is true, DELETE all existing songs before POST. <- TODO
+ * @param {String} textareaId - id of the import textarea
+ * @param {String} path - url path to POST
+ * trunc <- TODO
+ */
+function SaveImportCsv(textareaId, path, trunc=false){
+    $.ajax({
+        type: 'POST',
+        url: path,
+        headers: { 'Content-Type': "text/csv" },
+        data: $('#' + textareaId).val(),
+        async: true
+    }).done(function(content){
+        $('#button_submit_error_message').html('succeed');
+    }).fail(function(jqXHR, textStatus, errorThrown){
+        $('#button_submit_error_message').html('failed');
+	});
+}

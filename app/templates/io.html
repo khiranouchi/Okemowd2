@@ -21,7 +21,7 @@ Import and Export
 <!-- Text area -->
 <div class="x_part">
     <div>
-        <textarea class="z_io_import_append z_io_import_replace">dummy-i</textarea>
+        <textarea id="textarea_import" class="z_io_import_append z_io_import_replace"></textarea>
         <textarea id="textarea_export" class="z_io_export" readonly></textarea>
     </div>
 </div>
@@ -30,12 +30,14 @@ Import and Export
 <div class="x_part">
     <div>
         <button class="z_io_import_append btn btn-default"
+                onclick="SaveImportCsv('textarea_import', {{ path }})"
         >{{ STR_BUTTON_LABEL.IMPORT_APPEND_SUBMIT }}</button>
         <button class="z_io_import_replace btn btn-default"
+                onclick="SaveImportCsv('textarea_import', {{ path }}, true)"
         >{{ STR_BUTTON_LABEL.IMPORT_REPLACE_SUBMIT }}</button>
         <button class="z_io_export btn btn-default"
         >{{ STR_BUTTON_LABEL.EXPORT_COPY }}</button>
-        <p id="button_submit_error_message" class="z_io_import_append z_io_import_replace z_io_export">dummy</p>
+        <p id="button_submit_error_message" class="z_io_import_append z_io_import_replace z_io_export"></p>
     </div>
 </div>
 
