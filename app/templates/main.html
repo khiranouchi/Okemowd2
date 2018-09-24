@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}
+
 {% block title %}
 Song List
 {% endblock %}

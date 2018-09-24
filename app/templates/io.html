@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/io.js' %}"></script>
+{% endblock %}
+
 {% block title %}
 Import and Export
 {% endblock %}
