@@ -23,6 +23,7 @@ def main(request):
                 'dict_rank_name': dict_rank_name,
                 'genre_list': Genre.objects.all(),
                 'key_level_list': KeyLevel.objects.all(),
+                'key_list': range(0, 73),  # TODO
             }
             return render(request, 'main.html', d)
 
