@@ -174,6 +174,9 @@ function InsertSong(tableId, path){
         async: true
     }).done(function(content){
         // insert table line in html
+        console.log($('#' + tableId))
+        console.log($('#' + tableId + ' tbody'))
+        console.log(content)
         $('#' + tableId + ' tbody').append(content);
         $('#button_insert_error_message').html('');
     }).fail(function(jqXHR, textStatus, errorThrown){

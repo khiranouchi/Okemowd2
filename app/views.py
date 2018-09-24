@@ -50,7 +50,6 @@ def main(request):
 
         # create songs from song_data_list
         song_list = []
-        path_list = []
         for song_data in song_data_list:
             # filter empty string into None
             for i in range(len(song_data)):
@@ -97,10 +96,9 @@ def main(request):
             )
 
             song_list.append(song)
-            path_list.append(reverse('app:main_entry', args=[song.id]))
 
         d = {
-            'song_and_path_list': zip(song_list, path_list),
+            'song_list': song_list,
             'dict_rank_name': dict_rank_name,
         }
         return render(request, 'song_table_line.html', d, status=201)
@@ -122,9 +120,8 @@ def main_entry(request, song_id):
         except Song.DoesNotExist:
             return HttpResponse(status=404)
         song_list = [song]
-        path_list = [reverse('app:main_entry', args=[song.id])]
         d = {
-            'song_and_path_list': zip(song_list, path_list),
+            'song_list': song_list,
             'dict_rank_name': dict_rank_name,
         }
         return render(request, 'song_table_line.html', d)
