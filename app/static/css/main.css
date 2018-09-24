@@ -18,6 +18,14 @@ body {
 }
 
 
+/* common ************************************/
+
+/* inline-block */
+.x_inline_block {
+    display: inline-block;
+}
+
+
 /* subtitle of each part *********************/
 
 /* subtitle div */
@@ -30,6 +38,11 @@ body {
 
 
 /* table *************************************/
+
+/* div.table-responsive */
+.table-responsive {
+    margin-bottom: 4px;
+}
 
 /* table */
 .table {

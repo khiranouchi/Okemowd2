@@ -147,13 +147,14 @@ function InputOnKeyDown(obj){
  * @param {String} path - url path to DELETE
  */
 function DeleteSong(obj, path){
-    // delete table line in html
-    $(obj).closest("tr").remove();
     // delete data in database
     $.ajax({
         type: 'DELETE',
         url: path,
         async: true
+    }).done(function(){
+        // delete table line in html
+        $(obj).closest("tr").remove();
     });
 }
 
@@ -173,7 +174,7 @@ function InsertSong(tableId, path){
         async: true
     }).done(function(content){
         // insert table line in html
-        $('#' + tableId).append(content);
+        $('#' + tableId + ' tbody').append(content);
         $('#button_insert_error_message').html('');
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
