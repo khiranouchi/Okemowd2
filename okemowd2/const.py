@@ -4,6 +4,7 @@ def get_constants(request):
         'STR_SONG_PROPERTY': {
             'ID': '',
             'NAME': 'Song Title',
+            'NAME_RUBY': 'Song Title Ruby',
             'ARTIST': 'Artist',
             'GENRE': 'Genre',
             'KEY_LEVEL': 'Key Level',

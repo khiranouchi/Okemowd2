@@ -21,6 +21,7 @@ class KeyLevel(models.Model):
 class Song(models.Model):
     # id primary_key [made automatically]
     name = models.CharField(max_length=64)
+    name_ruby = models.CharField(max_length=128)
     artist = models.CharField(max_length=32, null=True)
     genre = models.ForeignKey(Genre, models.SET_NULL, db_index=True, null=True)
     key_level = models.ForeignKey(KeyLevel, models.SET_NULL, db_index=True, null=True)
@@ -32,5 +33,5 @@ class Song(models.Model):
     link = models.TextField(null=True)
 
     def values(self):
-        return [self.name, self.artist, self.genre_id, self.key_level_id,
+        return [self.name, self.name_ruby, self.artist, self.genre_id, self.key_level_id,
                 self.key_min, self.key_freq_min, self.key_freq_max, self.key_max, self.rank, self.link]

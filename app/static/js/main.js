@@ -170,7 +170,7 @@ function InsertSong(tableId, path){
     $.ajax({
         type: 'POST',
         url: path,
-        data: {'name': '(new_song)'},
+        data: {'name': '(new_song)', 'name_ruby': '(new_song)'},
         async: true
     }).done(function(content){
         // insert table line in html

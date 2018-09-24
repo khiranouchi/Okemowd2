@@ -35,6 +35,7 @@ def main(request):
         else:
             song_data = [
                 request.POST.get('name'),
+                request.POST.get('name_ruby'),
                 request.POST.get('artist'),
                 request.POST.get('genre_id'),
                 request.POST.get('key_level_id'),
@@ -56,16 +57,17 @@ def main(request):
                 if song_data[i] is None or not song_data[i]:
                     song_data[i] = None
             # define undefined element as None
-            for i in range(len(song_data), 10):  # 10 is the number of fields!!!
+            for i in range(len(song_data), 11):  # 11 is the number of fields!!!
                 song_data.append(None)
 
-            # name has nonnull restriction
+            # name and name_ruby have nonnull restriction
             name = song_data[0]
-            if name is None:
+            name_ruby = song_data[1]
+            if name is None or name_ruby is None:
                 return HttpResponse(status=400)
 
             # genre_id is foreign-key which must exist in table Genre
-            genre_id = song_data[2]
+            genre_id = song_data[3]
             if genre_id is not None:
                 try:
                     Genre.objects.get(id=genre_id)
@@ -73,7 +75,7 @@ def main(request):
                     return HttpResponse(status=400)
 
             # keylevel_id is foreign-key which must exist in table KeyLevel
-            key_level_id = song_data[3]
+            key_level_id = song_data[4]
             if key_level_id is not None:
                 try:
                     KeyLevel.objects.get(id=key_level_id)
@@ -82,15 +84,16 @@ def main(request):
 
             song = Song.objects.create(
                 name = name,
-                artist = song_data[1],
+                name_ruby = name_ruby,
+                artist = song_data[2],
                 genre_id = genre_id,
                 key_level_id = key_level_id,
-                key_min = song_data[4],
-                key_freq_min = song_data[5],
-                key_freq_max = song_data[6],
-                key_max = song_data[7],
-                rank = song_data[8],
-                link = song_data[9],
+                key_min = song_data[5],
+                key_freq_min = song_data[6],
+                key_freq_max = song_data[7],
+                key_max = song_data[8],
+                rank = song_data[9],
+                link = song_data[10],
             )
 
             song_list.append(song)
@@ -144,6 +147,8 @@ def main_entry(request, song_id):
 
             if key == 'name':
                 song.name = value
+            elif key == 'name_ruby':
+                song.name_ruby = value
             elif key == 'artist':
                 song.artist = value
             elif key == 'genre_id':
