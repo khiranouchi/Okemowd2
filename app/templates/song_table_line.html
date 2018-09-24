@@ -1,6 +1,6 @@
 {% for song in song_list %}
-<tr>
-    <td>
+<tr onkeydown="PreventDefaultKey(32)">
+    <td onkeydown="PreventDefaultKey(13)">
         <button class="btn" onclick="DeleteSong(this, '{% url 'app:main_entry' song.id %}')">x</button>
     </td>
     <td class="x_td_align_right">{{ song.id }}</td>

@@ -101,6 +101,15 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
 }
 
 /**
+ * Prevent default role of key.
+ */
+function PreventDefaultKey(keyCode){
+    if(event.keyCode == keyCode){
+        event.preventDefault();
+    }
+}
+
+/**
  * Return true if key is the key to drive switching to input/select mode (F2 / Space / I / A).
  * @param {Object} event - event object
  */

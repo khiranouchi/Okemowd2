@@ -24,6 +24,7 @@ function LoadExportCsv(textareaId, path){
         type: 'GET',
         url: path,
         headers: { Accept: "text/csv" },
+        cache: false,
         async: true
     }).done(function(content){
         $('#' + textareaId).val(content);
