@@ -21,6 +21,8 @@ def main(request):
             d = {
                 'song_list': Song.objects.all(),
                 'dict_rank_name': dict_rank_name,
+                'genre_list': Genre.objects.all(),
+                'key_level_list': KeyLevel.objects.all(),
             }
             return render(request, 'main.html', d)
 

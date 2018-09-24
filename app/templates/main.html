@@ -74,11 +74,7 @@ Song List
 
 </div>
 
-<datalist id="datalist_rank">
-    {% for key,value in dict_rank_name.items %}
-    <option id="{{ key }}" value="{{ value }}">
-    {% endfor %}
-</datalist>
+{% include 'song_table_datalist.html' %}
 
 <script>
 // activate tablesorter

@@ -1,0 +1,17 @@
+<datalist id="datalist_genre">
+    {% for genre in genre_list %}
+    <option id="{{ genre.id }}" value="{{ genre.name }}">
+    {% endfor %}
+</datalist>
+
+<datalist id="datalist_key_level">
+    {% for key_level in key_level_list %}
+    <option id="{{ key_level.id }}" value="{{ key_level.name }}">
+    {% endfor %}
+</datalist>
+
+<datalist id="datalist_rank">
+    {% for key,value in dict_rank_name.items %}
+    <option id="{{ key }}" value="{{ value }}">
+    {% endfor %}
+</datalist>
