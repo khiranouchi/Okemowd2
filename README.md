@@ -1,5 +1,6 @@
 Karaoke Song Management System
 ============
+Website: COMING SOON <br>
 Web Application. <br>
 You can make song list
 and keep song name, artist name, genre, minimum key, maximum key and so on. <br>
@@ -72,5 +73,9 @@ Fields can be too few or too many in CSV format.
 
 (The others are TODO)
 
-
-
+Dependency
+--------
++ tablesorter
+  - Copyright (c) 2014 Christian Bach
+  - Released under the MIT license
+  - https://github.com/christianbach/tablesorter/blob/master/LICENSE
