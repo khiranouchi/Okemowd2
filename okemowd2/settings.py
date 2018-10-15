@@ -48,9 +48,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middleware.PutParsingMiddleware',
-    'middleware.PatchParsingMiddleware',
-    'middleware.JSONParsingMiddleware',
+    'okemowd2.middleware.PutParsingMiddleware',
+    'okemowd2.middleware.PatchParsingMiddleware',
+    'okemowd2.middleware.JSONParsingMiddleware',
 ]
 
 ROOT_URLCONF = 'okemowd2.urls'
@@ -66,7 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'const.get_constants',
+                'okemowd2.const.get_constants',
             ],
         },
     },
