@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
+from django.http import HttpResponse
 
 urlpatterns = [
+    path('robots.txt', lambda r: HttpResponse("User-agent: *\nDisallow: /", content_type="text/plain")),
     path('admin/', admin.site.urls),
     path('main/', include(('app.urls', 'app'),)),
 ]
