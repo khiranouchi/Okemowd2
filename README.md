@@ -18,6 +18,11 @@ Install Django with
 
     pip install django
 
+Make migration with
+
+    python manage.py makemigrations
+    python manage.py migrate
+
 Run server with
 
     python manage.py runserver
