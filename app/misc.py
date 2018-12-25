@@ -12,8 +12,8 @@ dict_rank_name = {
 
 # pitch name
 dict_pitch_name = {
-    0: 'C', 1: 'C#', 2: 'D', 3: 'D#', 4: 'E', 5: 'F',
-    6: 'F#', 7: 'G', 8: 'G#', 9: 'A', 10: 'A#', 11: 'B'
+    0: 'A', 1: 'A#', 2: 'B', 3: 'C', 4: 'C#', 5: 'D',
+    6: 'D#', 7: 'E', 8: 'F', 9: 'F#', 10: 'G', 11: 'G#'
 }
 
 
@@ -50,7 +50,7 @@ def get_item_int(dictionary, key):
 
 
 # trans integer value into key name (get '' if key does not exist)
-# ...,-2,-1,0,1,2,...,12,13,... corresponds to tone ...,A#-1,B-1,C0,C#0,D0,...,C1,C#1,...
+# ...,-2,-1,0,1,2,...,12,13,... corresponds to tone ...,G-1,G#-1,A0,A#0,B0,...,A1,A#1,...
 @register.filter
 def get_key_name(key_int):
     if key_int is None:
