@@ -41,6 +41,14 @@ def get_item(dictionary, key):
     return dictionary.get(int(key))
 
 
+# trans key into item of dictionary (get -999 if key does not exist)
+@register.filter
+def get_item_int(dictionary, key):
+    if key is None:
+        return 999
+    return dictionary.get(int(key))
+
+
 # trans integer value into key name (get '' if key does not exist)
 # ...,-2,-1,0,1,2,...,12,13,... corresponds to tone ...,A#-1,B-1,C0,C#0,D0,...,C1,C#1,...
 @register.filter
@@ -49,14 +57,4 @@ def get_key_name(key_int):
         return ''
     ret = dict_pitch_name[int(key_int) % 12] + str(int(key_int) // 12)
     return ret
-
-
-# get key_level rank by key_level id
-@register.filter
-def get_key_level_rank(key_level_id):
-    try:
-        key_level = KeyLevel.objects.get(id=key_level_id)
-        return key_level.rank
-    except KeyLevel.DoesNotExist:
-        return 999
 

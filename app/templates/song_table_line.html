@@ -1,5 +1,5 @@
 {% for song in song_list %}
-<tr onkeydown="PreventDefaultKey(32)">
+<tr>
     <td onkeydown="PreventDefaultKey(13)">
         <button class="btn" onclick="DeleteSong(this, '{% url 'app:main_entry' song.id %}')">x</button>
     </td>
@@ -24,7 +24,7 @@
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre')}"
     >{{ song.genre|filter_none }}</td>
-    <td class="x_td_align_center {sortValue: {{ song.key_level_id|get_key_level_rank }} }" tabindex="0"
+    <td class="x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_int:song.key_level_id }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level')}"
