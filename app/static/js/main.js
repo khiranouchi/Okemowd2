@@ -16,7 +16,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
         $(obj).html('<input type="text" '
                     + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
-        $($(obj)[0].nodeName + '> input').focus().blur(
+        $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
             function(){
                 var inputVal = $(this).val();
@@ -59,7 +59,7 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     + 'autocomplete="on" list=' + datalistTagId + ' '
                     + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
-        $($(obj)[0].nodeName + '> input').focus().blur(
+        $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
             function(){
                 // check if inputted value is valid (exists in selective list OR empty)
