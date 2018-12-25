@@ -1,7 +1,5 @@
 from django.template.defaulttags import register
 
-from .models import KeyLevel
-
 
 # rank name
 dict_rank_name = {
@@ -12,8 +10,8 @@ dict_rank_name = {
 
 # pitch name
 dict_pitch_name = {
-    0: 'C', 1: 'C#', 2: 'D', 3: 'D#', 4: 'E', 5: 'F',
-    6: 'F#', 7: 'G', 8: 'G#', 9: 'A', 10: 'A#', 11: 'B'
+    0: 'A', 1: 'A#', 2: 'B', 3: 'C', 4: 'C#', 5: 'D',
+    6: 'D#', 7: 'E', 8: 'F', 9: 'F#', 10: 'G', 11: 'G#'
 }
 
 
@@ -50,11 +48,23 @@ def get_item_int(dictionary, key):
 
 
 # trans integer value into key name (get '' if key does not exist)
-# ...,-2,-1,0,1,2,...,12,13,... corresponds to tone ...,A#-1,B-1,C0,C#0,D0,...,C1,C#1,...
+# ...,-1,0,1,2,...,12,13,... corresponds to tone ...,lowlowlowG#,lowlowA,lowlowA#,lowlowB,...,lowA,lowA#,...
 @register.filter
 def get_key_name(key_int):
     if key_int is None:
         return ''
-    ret = dict_pitch_name[int(key_int) % 12] + str(int(key_int) // 12)
+
+    # calculate tone level name
+    level = int(key_int) // 12
+    if level <= 1:
+        level_name = 'low' * (2 - level)
+    elif level == 2:
+        level_name = 'mid1'
+    elif level == 3:
+        level_name = 'mid2'
+    else:
+        level_name = 'hi' * (level - 3)
+
+    ret = level_name + dict_pitch_name[int(key_int) % 12]
     return ret
 
