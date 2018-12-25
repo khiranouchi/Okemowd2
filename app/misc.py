@@ -1,7 +1,5 @@
 from django.template.defaulttags import register
 
-from .models import KeyLevel
-
 
 # rank name
 dict_rank_name = {
@@ -50,11 +48,23 @@ def get_item_int(dictionary, key):
 
 
 # trans integer value into key name (get '' if key does not exist)
-# ...,-2,-1,0,1,2,...,12,13,... corresponds to tone ...,G-1,G#-1,A0,A#0,B0,...,A1,A#1,...
+# ...,-1,0,1,2,...,12,13,... corresponds to tone ...,lowlowlowG#,lowlowA,lowlowA#,lowlowB,...,lowA,lowA#,...
 @register.filter
 def get_key_name(key_int):
     if key_int is None:
         return ''
-    ret = dict_pitch_name[int(key_int) % 12] + str(int(key_int) // 12)
+
+    # calculate tone level name
+    level = int(key_int) // 12
+    if level <= 1:
+        level_name = 'low' * (2 - level)
+    elif level == 2:
+        level_name = 'mid1'
+    elif level == 3:
+        level_name = 'mid2'
+    else:
+        level_name = 'hi' * (level - 3)
+
+    ret = level_name + dict_pitch_name[int(key_int) % 12]
     return ret
 
