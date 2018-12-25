@@ -18,9 +18,13 @@ def main(request):
                 writer.writerow(song.values())
             return response
         else:
+            dict_key_level_rank = {}
+            for key_level in KeyLevel.objects.all().values('id', 'rank'):
+                dict_key_level_rank[key_level['id']] = key_level['rank']
             d = {
-                'song_list': Song.objects.all(),
+                'song_list': Song.objects.all().select_related('genre', 'key_level'),
                 'dict_rank_name': dict_rank_name,
+                'dict_key_level_rank': dict_key_level_rank,
                 'genre_list': Genre.objects.all(),
                 'key_level_list': KeyLevel.objects.all(),
                 'key_list': range(0, 73),  # TODO
@@ -100,9 +104,13 @@ def main(request):
 
             song_list.append(song)
 
+        dict_key_level_rank = {}
+        for key_level in KeyLevel.objects.all().values('id', 'rank'):
+            dict_key_level_rank[key_level['id']] = key_level['rank']
         d = {
             'song_list': song_list,
             'dict_rank_name': dict_rank_name,
+            'dict_key_level_rank': dict_key_level_rank,
         }
         return render(request, 'song_table_line.html', d, status=201)
 
