@@ -30,9 +30,10 @@ Song List
 
     <!-- Select visible column -->
     <div>
-        {% for song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
+        {% for song_column_key, song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
         <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}')"
+            <input type="checkbox"
+                   onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}')"
                    {% if song_column_visibility %}
                    checked
                    {% endif %}
@@ -88,9 +89,11 @@ Song List
 <script>
 $(document).ready(function(){
     // initialize column visibility (TODO slow?)
-    {% for song_column_class, song_column_visibility in zip_song_column_class2 %}
-    {% if not song_column_visibility %}
-    FilterVisibleColumn(false, '{{ song_column_class }}');
+    {% for song_column_key, song_column_class, song_column_visibility in zip_song_column_class2 %}
+    {% if song_column_visibility %}
+    FilterVisibleColumn(true, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
+    {% else %}
+    FilterVisibleColumn(false, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
     {% endif %}
     {% endfor %}
     // activate tablesorter

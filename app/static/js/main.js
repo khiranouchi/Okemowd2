@@ -208,16 +208,29 @@ function InsertSong(tableId, path){
 
 /**
  * Switch visibility of table column.
+ * Also send http request to save visibility state in cookie (when path is not null).
  * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
  * @param {String} targetColumnClass - class of column(td) which you want to switch visibility
+ * @param {String} path - url path to POST
+ * @param {String} targetColumnKey - key of column (for cookie)
  */
-function FilterVisibleColumn(isSwitchOn, targetColumnClass){
-    console.log(isSwitchOn);
-    console.log(targetColumnClass);
+function FilterVisibleColumn(isSwitchOn, targetColumnClass, path=null, targetColumnKey=null){
+    var data = {};
     if(isSwitchOn){
         $('.' + targetColumnClass).css('display', 'table-cell');
+        data[targetColumnKey] = 1;
     }else{
         $('.' + targetColumnClass).css('display', 'none');
+        data[targetColumnKey] = 0;
+    }
+    // save visibility state of target column in cookie
+    if(path){
+        $.ajax({
+            type: 'POST',
+            url: path,
+            data: data,
+            async: true
+        })
     }
 }
 

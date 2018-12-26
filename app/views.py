@@ -36,9 +36,10 @@ def main(request):
                 'genre_list': Genre.objects.all(),
                 'key_level_list': KeyLevel.objects.all(),
                 'key_list': range(0, 73),  # TODO
-                'zip_song_column_class': zip(dict_song_column_class.values(), dict_song_column_property.values(), song_column_visibility_list),
+                'zip_song_column_class': zip(dict_song_column_class.keys(), dict_song_column_class.values(),
+                                               dict_song_column_property.values(), song_column_visibility_list),
                 # to avoid template issue (cannot use the same zip more than once for some reason / i want to use zip_song_column_class too here)
-                'zip_song_column_class2': zip(dict_song_column_class.values(), song_column_visibility_list),
+                'zip_song_column_class2': zip(dict_song_column_class.keys(), dict_song_column_class.values(), song_column_visibility_list),
             }
             return render(request, 'main.html', d)
 
@@ -204,5 +205,17 @@ def main_io(request):
             'path': reverse('app:main'),
         }
         return render(request, 'io.html', d)
+
+    return HttpResponse(status=501)
+
+
+@csrf_exempt
+def main_cookie(request):
+    # set cookie with specified key/value
+    if request.method == 'POST':
+        response = HttpResponse(status=204)
+        for key, value in request.PATCH.items():
+            response.set_cookie(key, value, max_age=60*60*24*365*10)
+        return response
 
     return HttpResponse(status=501)
