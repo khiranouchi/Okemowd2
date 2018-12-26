@@ -28,60 +28,18 @@ Song List
         Song List
     </div>
 
-    <!-- Select visible column --> <!-- TODO foreach by server? & default checked by user? -->
+    <!-- Select visible column -->
     <div>
+        {% for song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
         <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}')">
-            {{ STR_SONG_PROPERTY.DELETE_BUTTON }}
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}')"
+                   {% if song_column_visibility %}
+                   checked
+                   {% endif %}
+            >
+            {{ song_column_property }}
         </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.ID }}')">
-            {{ STR_SONG_PROPERTY.ID }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.NAME }}')">
-            {{ STR_SONG_PROPERTY.NAME }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }}')">
-            {{ STR_SONG_PROPERTY.NAME_RUBY }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.ARTIST }}')">
-            {{ STR_SONG_PROPERTY.ARTIST }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')">
-            {{ STR_SONG_PROPERTY.GENRE }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}')">
-            {{ STR_SONG_PROPERTY.KEY_LEVEL }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_MIN }}')">
-            {{ STR_SONG_PROPERTY.KEY_MIN }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }}')">
-            {{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }}')">
-            {{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')">
-            {{ STR_SONG_PROPERTY.KEY_MAX }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.RANK }}')">
-            {{ STR_SONG_PROPERTY.RANK }}
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.LINK }}')">
-            {{ STR_SONG_PROPERTY.LINK }}
-        </label>
+        {% endfor %}
     </div>
 
     <!-- Table -->
@@ -128,8 +86,14 @@ Song List
 {% include 'song_table_datalist.html' %}
 
 <script>
-// activate tablesorter
 $(document).ready(function(){
+    // initialize column visibility (TODO slow?)
+    {% for song_column_class, song_column_visibility in zip_song_column_class2 %}
+    {% if not song_column_visibility %}
+    FilterVisibleColumn(false, '{{ song_column_class }}');
+    {% endif %}
+    {% endfor %}
+    // activate tablesorter
     $("#table_song_list").tablesorter();
 });
 </script>

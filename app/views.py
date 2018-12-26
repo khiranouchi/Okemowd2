@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import Genre, KeyLevel, Song
 from .misc import *
+from okemowd2.const import get_constants
 
 
 @csrf_exempt
@@ -18,9 +19,16 @@ def main(request):
                 writer.writerow(song.values())
             return response
         else:
+            # create key_level dictionary(key: id, value: rank) for table sort
             dict_key_level_rank = {}
             for key_level in KeyLevel.objects.all().values('id', 'rank'):
                 dict_key_level_rank[key_level['id']] = key_level['rank']
+            # calculate song_column_class/_property/_visibility
+            dict_song_column_class = get_constants(request)['STR_SONG_COLUMN_CLASS']
+            dict_song_column_property = get_constants(request)['STR_SONG_PROPERTY']  # not always have to equal to song property (equal currently)
+            song_column_visibility_list = []
+            for song_column_key in dict_song_column_class.keys():
+                song_column_visibility_list.append(get_constants(request)['SONG_COLUMN_DEFAULT_VISIBILITY'][song_column_key])
             d = {
                 'song_list': Song.objects.all().select_related('genre', 'key_level'),
                 'dict_rank_name': dict_rank_name,
@@ -28,6 +36,9 @@ def main(request):
                 'genre_list': Genre.objects.all(),
                 'key_level_list': KeyLevel.objects.all(),
                 'key_list': range(0, 73),  # TODO
+                'zip_song_column_class': zip(dict_song_column_class.values(), dict_song_column_property.values(), song_column_visibility_list),
+                # to avoid template issue (cannot use the same zip more than once for some reason / i want to use zip_song_column_class too here)
+                'zip_song_column_class2': zip(dict_song_column_class.values(), song_column_visibility_list),
             }
             return render(request, 'main.html', d)
 
