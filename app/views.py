@@ -18,17 +18,27 @@ def main(request):
             for song in Song.objects.all():
                 writer.writerow(song.values())
             return response
+
         else:
             # create key_level dictionary(key: id, value: rank) for table sort
             dict_key_level_rank = {}
             for key_level in KeyLevel.objects.all().values('id', 'rank'):
                 dict_key_level_rank[key_level['id']] = key_level['rank']
+
             # calculate song_column_class/_property/_visibility
             dict_song_column_class = get_constants(request)['STR_SONG_COLUMN_CLASS']
             dict_song_column_property = get_constants(request)['STR_SONG_PROPERTY']  # not always have to equal to song property (equal currently)
             song_column_visibility_list = []
             for song_column_key in dict_song_column_class.keys():
-                song_column_visibility_list.append(get_constants(request)['SONG_COLUMN_DEFAULT_VISIBILITY'][song_column_key])
+                visibility = request.COOKIES.get(song_column_key)
+                if visibility is not None:
+                    if visibility == '1':
+                        song_column_visibility_list.append(True)
+                    else:
+                        song_column_visibility_list.append(False)
+                else:
+                    song_column_visibility_list.append(get_constants(request)['SONG_COLUMN_DEFAULT_VISIBILITY'][song_column_key])
+
             d = {
                 'song_list': Song.objects.all().select_related('genre', 'key_level'),
                 'dict_rank_name': dict_rank_name,
