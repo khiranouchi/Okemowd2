@@ -199,3 +199,26 @@ function InsertSong(tableId, path){
         $('#button_insert_error_message').html('failed');
 	});
 }
+
+
+
+/*****************************************************************************************************************/
+/*** About Filter Table Column/Row *******************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Switch visibility of table column.
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetColumnClass - class of column(td) which you want to switch visibility
+ */
+function FilterVisibleColumn(isSwitchOn, targetColumnClass){
+    console.log(isSwitchOn);
+    console.log(targetColumnClass);
+    if(isSwitchOn){
+        $('.' + targetColumnClass).css('display', 'table-cell');
+    }else{
+        $('.' + targetColumnClass).css('display', 'none');
+    }
+}
+
+

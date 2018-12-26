@@ -28,9 +28,60 @@ Song List
         Song List
     </div>
 
-    <!-- Select visible column -->
+    <!-- Select visible column --> <!-- TODO foreach by server? & default checked by user? -->
     <div>
-        Select visible column TODO
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}')">
+            {{ STR_SONG_PROPERTY.DELETE_BUTTON }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.ID }}')">
+            {{ STR_SONG_PROPERTY.ID }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.NAME }}')">
+            {{ STR_SONG_PROPERTY.NAME }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }}')">
+            {{ STR_SONG_PROPERTY.NAME_RUBY }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.ARTIST }}')">
+            {{ STR_SONG_PROPERTY.ARTIST }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')">
+            {{ STR_SONG_PROPERTY.GENRE }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}')">
+            {{ STR_SONG_PROPERTY.KEY_LEVEL }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_MIN }}')">
+            {{ STR_SONG_PROPERTY.KEY_MIN }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }}')">
+            {{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }}')">
+            {{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')">
+            {{ STR_SONG_PROPERTY.KEY_MAX }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.RANK }}')">
+            {{ STR_SONG_PROPERTY.RANK }}
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" onchange="FilterVisibleColumn(this.checked, '{{ STR_SONG_COLUMN_CLASS.LINK }}')">
+            {{ STR_SONG_PROPERTY.LINK }}
+        </label>
     </div>
 
     <!-- Table -->
@@ -38,19 +89,19 @@ Song List
         <table id="table_song_list" class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th></th>
-                    <th>{{ STR_SONG_PROPERTY.ID }}</th>
-                    <th class="{sorter:'metatext'}">{{ STR_SONG_PROPERTY.NAME }}</th>
-                    <th>{{ STR_SONG_PROPERTY.NAME_RUBY }}</th>
-                    <th>{{ STR_SONG_PROPERTY.ARTIST }}</th>
-                    <th>{{ STR_SONG_PROPERTY.GENRE }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
-                    <th>{{ STR_SONG_PROPERTY.RANK }}</th>
-                    <th>{{ STR_SONG_PROPERTY.LINK }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}"></th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.ID }}"></th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.NAME }} {sorter:'metatext'}">{{ STR_SONG_PROPERTY.NAME }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }}">{{ STR_SONG_PROPERTY.NAME_RUBY }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.ARTIST }}">{{ STR_SONG_PROPERTY.ARTIST }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.GENRE }}">{{ STR_SONG_PROPERTY.GENRE }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_MIN }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_MAX }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.RANK }} ">{{ STR_SONG_PROPERTY.RANK }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.LINK }} ">{{ STR_SONG_PROPERTY.LINK }}</th>
                 </tr>
             </thead>
             <tbody>

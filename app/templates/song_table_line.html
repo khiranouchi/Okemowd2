@@ -1,60 +1,60 @@
 {% for song in song_list %}
 <tr>
-    <td onkeydown="PreventDefaultKey(13)">
+    <td class="{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}" onkeydown="PreventDefaultKey(13)">
         <button class="btn" onclick="if(ShowCheckDialogRet('Really delete this song?')){ DeleteSong(this, '{% url 'app:main_entry' song.id %}') }">x</button>
     </td>
-    <td class="x_td_align_right">{{ song.id }}</td>
-    <td class="x_td_align_left {sortValue: '{{ song.name_ruby }}' }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.ID }} x_td_align_right">{{ song.id }}</td>
+    <td class="{{ STR_SONG_COLUMN_CLASS.NAME }} x_td_align_left {sortValue: '{{ song.name_ruby }}' }" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)}"
     >{{ song.name }}</td>
-    <td class="x_td_align_left" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name_ruby', false)"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name_ruby', false)}"
     >{{ song.name_ruby }}</td>
-    <td class="x_td_align_left" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.ARTIST }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')}"
     >{{ song.artist|filter_none }}</td>
-    <td class="x_td_align_left" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.GENRE }} x_td_align_left" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre')}"
     >{{ song.genre|filter_none }}</td>
-    <td class="x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_int:song.key_level_id }} }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_int:song.key_level_id }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level')}"
     >{{ song.key_level|filter_none }}</td>
-    <td class="x_td_align_center {sortValue: {{ song.key_min|filter_none_min }} }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.KEY_MIN }} x_td_align_center {sortValue: {{ song.key_min|filter_none_min }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key')}"
     >{{ song.key_min|get_key_name }}</td>
-    <td class="x_td_align_center {sortValue: {{ song.key_freq_min|filter_none_min }} }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }} x_td_align_center {sortValue: {{ song.key_freq_min|filter_none_min }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key')}"
     >{{ song.key_freq_min|get_key_name }}</td>
-    <td class="x_td_align_center {sortValue: {{ song.key_freq_max|filter_none_min }} }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }} x_td_align_center {sortValue: {{ song.key_freq_max|filter_none_min }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key')}"
     >{{ song.key_freq_max|get_key_name }}</td>
-    <td class="x_td_align_center {sortValue: {{ song.key_max|filter_none_min }} }" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.KEY_MAX }} x_td_align_center {sortValue: {{ song.key_max|filter_none_min }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key')}"
     >{{ song.key_max|get_key_name }}</td>
-    <td class="x_td_align_center" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.RANK }} x_td_align_center" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank')}"
     >{{ dict_rank_name|get_item:song.rank }}</td>
-    <td class="x_td_align_left" tabindex="0"
+    <td class="{{ STR_SONG_COLUMN_CLASS.LINK }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link')}"
