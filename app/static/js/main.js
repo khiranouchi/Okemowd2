@@ -151,6 +151,7 @@ function InputOnKeyDown(obj){
         obj.blur();
         parent.focus();
     }
+    event.stopPropagation();
 }
 
 
