@@ -46,6 +46,11 @@ def get_constants(request):
             'RANK': True,
             'LINK': True,
         },
+        'STR_SONG_ROW_CLASS_PREFIX': {
+            'GENRE': 'xd-song-row-genre-',
+            'KEY_LEVEL': 'xd-song-row-key-level-',
+            'RANK': 'xd-song-row-rank-',
+        },
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',
             'IMPORT_AND_EXPORT': 'Import and Export',
