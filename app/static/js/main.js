@@ -234,4 +234,13 @@ function FilterVisibleColumn(isSwitchOn, targetColumnClass, path=null, targetCol
     }
 }
 
+/**
+ * Switch visibility of table row.
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetRowClass - class of row(tr) which you want to switch visibility
+ */
+function FilterVisibleRow(isSwitchOn, targetRowClass){
+    console.log(isSwitchOn);
+    console.log(targetRowClass);
 
+}

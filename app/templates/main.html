@@ -3,6 +3,7 @@
 {% load static %}
 
 {% block head %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}
 
@@ -18,7 +19,45 @@ Song List
         Filter
     </div>
     <div>
-        Filter result TODO
+        <dl>
+            <dt>{{ STR_SONG_PROPERTY.GENRE }}</dt>
+            <dd>
+                {% for genre in genre_list %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}{{ genre.id }}')"
+                    >
+                    {{ genre.name }}
+                </label>
+                {% endfor %}
+            </dd>
+        </dl>
+        <dl>
+            <dt>{{ STR_SONG_PROPERTY.KEY_LEVEL }}</dt>
+            <dd>
+                {% for key_level in key_level_list %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}{{ key_level.id }}')"
+                    >
+                    {{ key_level.name }}
+                </label>
+                {% endfor %}
+            </dd>
+        </dl>
+        <dl>
+            <dt>{{ STR_SONG_PROPERTY.RANK }}</dt>
+            <dd>
+                {% for key,value in dict_rank_name.items %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.RANK }}{{ key }}')"
+                    >
+                    {{ value }}
+                </label>
+                {% endfor %}
+            </dd>
+        </dl>
     </div>
 </div>
 
