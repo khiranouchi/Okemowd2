@@ -91,3 +91,14 @@ th.headerSortDown {
         width: 11rem;
     }
 }
+
+
+/* others ************************************/
+
+/* checkbox-inline */
+.checkbox-inline+.checkbox-inline {
+    margin-left: 0;
+}
+.checkbox-inline {
+    margin-right: 10px;
+}
