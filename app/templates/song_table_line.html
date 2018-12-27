@@ -4,21 +4,21 @@
         <button class="btn" onclick="if(ShowCheckDialogRet('Really delete this song?')){ DeleteSong(this, '{% url 'app:main_entry' song.id %}') }">x</button>
     </td>
     <td class="{{ STR_SONG_COLUMN_CLASS.ID }} x_td_align_right">{{ song.id }}</td>
-    <td class="{{ STR_SONG_COLUMN_CLASS.NAME }} x_td_align_left {sortValue: '{{ song.name_ruby }}' }" tabindex="0"
-        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)"
+    <td class="{{ STR_SONG_COLUMN_CLASS.NAME }} x_td_align_left x_limit_width_14_a {sortValue: '{{ song.name_ruby }}' }" tabindex="0"
+        onclick="SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name', false)"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name', false)}"
-    >{{ song.name }}</td>
+                 SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name', false)}"
+    ><div class="x_limit_width_14">{{ song.name }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }} x_td_align_left" tabindex="0"
-        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name_ruby', false)"
+        onclick=";SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false)"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'name_ruby', false)}"
-    >{{ song.name_ruby }}</td>
+                 SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false)}"
+    ><div class="x_limit_width_14">{{ song.name_ruby }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.ARTIST }} x_td_align_left" tabindex="0"
-        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')"
+        onclick="SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'artist')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'artist')}"
-    >{{ song.artist|filter_none }}</td>
+                 SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'artist')}"
+    ><div class="x_limit_width_11">{{ song.artist|filter_none }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.GENRE }} x_td_align_left" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre')"
         onkeyup="if(IsKeyDriveModeOn(event)){

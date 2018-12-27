@@ -147,7 +147,7 @@ function IsKeyDriveModeOff(event){
  */
 function InputOnKeyDown(obj){
     if(IsKeyDriveModeOff(event)){
-        var parent = $(obj).parent();
+        var parent = $(obj).parents('td');
         obj.blur();
         parent.focus();
     }

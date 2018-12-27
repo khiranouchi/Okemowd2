@@ -77,3 +77,17 @@ th.headerSortUp {
 th.headerSortDown {
     background-color: lavenderblush;
 }
+
+/* table-cell width */
+@media (max-width: 575px) {
+    .x_limit_width_14 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 14rem;
+    }
+    .x_limit_width_11 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 11rem;
+    }
+}
