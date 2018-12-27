@@ -147,7 +147,7 @@ function IsKeyDriveModeOff(event){
  */
 function InputOnKeyDown(obj){
     if(IsKeyDriveModeOff(event)){
-        var parent = $(obj).parent();
+        var parent = $(obj).parents('td');
         obj.blur();
         parent.focus();
     }
@@ -199,3 +199,39 @@ function InsertSong(tableId, path){
         $('#button_insert_error_message').html('failed');
 	});
 }
+
+
+
+/*****************************************************************************************************************/
+/*** About Filter Table Column/Row *******************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Switch visibility of table column.
+ * Also send http request to save visibility state in cookie (when path is not null).
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetColumnClass - class of column(td) which you want to switch visibility
+ * @param {String} path - url path to POST
+ * @param {String} targetColumnKey - key of column (for cookie)
+ */
+function FilterVisibleColumn(isSwitchOn, targetColumnClass, path=null, targetColumnKey=null){
+    var data = {};
+    if(isSwitchOn){
+        $('.' + targetColumnClass).css('display', 'table-cell');
+        data[targetColumnKey] = 1;
+    }else{
+        $('.' + targetColumnClass).css('display', 'none');
+        data[targetColumnKey] = 0;
+    }
+    // save visibility state of target column in cookie
+    if(path){
+        $.ajax({
+            type: 'POST',
+            url: path,
+            data: data,
+            async: true
+        })
+    }
+}
+
+

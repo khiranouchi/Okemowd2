@@ -30,7 +30,17 @@ Song List
 
     <!-- Select visible column -->
     <div>
-        Select visible column TODO
+        {% for song_column_key, song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
+        <label class="checkbox-inline">
+            <input type="checkbox"
+                   onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}')"
+                   {% if song_column_visibility %}
+                   checked
+                   {% endif %}
+            >
+            {{ song_column_property }}
+        </label>
+        {% endfor %}
     </div>
 
     <!-- Table -->
@@ -38,19 +48,19 @@ Song List
         <table id="table_song_list" class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th></th>
-                    <th>{{ STR_SONG_PROPERTY.ID }}</th>
-                    <th class="{sorter:'metatext'}">{{ STR_SONG_PROPERTY.NAME }}</th>
-                    <th>{{ STR_SONG_PROPERTY.NAME_RUBY }}</th>
-                    <th>{{ STR_SONG_PROPERTY.ARTIST }}</th>
-                    <th>{{ STR_SONG_PROPERTY.GENRE }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
-                    <th class="{sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
-                    <th>{{ STR_SONG_PROPERTY.RANK }}</th>
-                    <th>{{ STR_SONG_PROPERTY.LINK }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}"></th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.ID }}"></th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.NAME }} {sorter:'metatext'}">{{ STR_SONG_PROPERTY.NAME }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }}">{{ STR_SONG_PROPERTY.NAME_RUBY }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.ARTIST }}">{{ STR_SONG_PROPERTY.ARTIST }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.GENRE }}">{{ STR_SONG_PROPERTY.GENRE }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_LEVEL }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_MIN }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MIN }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MIN }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_FREQ_MAX }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.KEY_MAX }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.RANK }} ">{{ STR_SONG_PROPERTY.RANK }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.LINK }} ">{{ STR_SONG_PROPERTY.LINK }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,8 +87,16 @@ Song List
 {% include 'song_table_datalist.html' %}
 
 <script>
-// activate tablesorter
 $(document).ready(function(){
+    // initialize column visibility (TODO slow?)
+    {% for song_column_key, song_column_class, song_column_visibility in zip_song_column_class2 %}
+    {% if song_column_visibility %}
+    FilterVisibleColumn(true, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
+    {% else %}
+    FilterVisibleColumn(false, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
+    {% endif %}
+    {% endfor %}
+    // activate tablesorter
     $("#table_song_list").tablesorter();
 });
 </script>
