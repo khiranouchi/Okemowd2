@@ -30,6 +30,12 @@ Song List
                     {{ genre.name }}
                 </label>
                 {% endfor %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}', 'z-tr-invisible-by-genre')"
+                    >
+                    {{ STR_TEXT.UNSET_FIELD_VALUE }}
+                </label>
             </dd>
         </dl>
         <dl>
@@ -43,6 +49,12 @@ Song List
                     {{ key_level.name }}
                 </label>
                 {% endfor %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}', 'z-tr-invisible-by-key-level')"
+                    >
+                    {{ STR_TEXT.UNSET_FIELD_VALUE }}
+                </label>
             </dd>
         </dl>
         <dl>
@@ -56,6 +68,12 @@ Song List
                     {{ value }}
                 </label>
                 {% endfor %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.RANK }}None', 'z-tr-invisible-by-rank')"
+                    >
+                    {{ STR_TEXT.UNSET_FIELD_VALUE }}
+                </label>
             </dd>
         </dl>
     </div>

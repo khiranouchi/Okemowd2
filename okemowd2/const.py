@@ -60,5 +60,8 @@ def get_constants(request):
             'IMPORT_APPEND_SUBMIT': 'Append',
             'IMPORT_REPLACE_SUBMIT': 'Replace',
             'EXPORT_COPY': 'Copy',
+        },
+        'STR_TEXT': {
+            'UNSET_FIELD_VALUE': 'Null',
         }
     }
