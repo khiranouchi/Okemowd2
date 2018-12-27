@@ -16,14 +16,13 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
         $(obj).html('<input type="text" '
                     + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
-        $($(obj)[0].nodeName + '> input').focus().blur(
+        $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
             function(){
                 var inputVal = $(this).val();
+                var defaultVal = this.defaultValue;
                 // if arrowEmpty==true OR inputted value is not empty
                 if(arrowEmpty || inputVal){
-                    // update text in html
-                    $(obj).removeClass('input_mode_on').text(inputVal);
                     // update data in database
                     var data = {};
                     data[fieldName] = inputVal;
@@ -32,11 +31,17 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                         url: path,
                         data: data,
                         async: true
+                    }).done(function(){
+                        // update text in html
+                        $(obj).removeClass('input_mode_on').text(inputVal);
+                    }).fail(function(){
+                        // reset default value
+                        $(obj).removeClass('input_mode_on').text(defaultVal);
                     });
                 // if arrowEmpty==false AND inputted value is empty
                 }else{
                     // reset default value
-                    $(obj).removeClass('input_mode_on').text(this.defaultValue);
+                    $(obj).removeClass('input_mode_on').text(defaultVal);
                 }
             }
         )
@@ -59,11 +64,12 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     + 'autocomplete="on" list=' + datalistTagId + ' '
                     + 'onkeydown="InputOnKeyDown(this)" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
-        $($(obj)[0].nodeName + '> input').focus().blur(
+        $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
             function(){
                 // check if inputted value is valid (exists in selective list OR empty)
                 var inputVal = $(this).val();
+                var defaultVal = this.defaultValue;
                 var found;
                 var key;
                 if(inputVal){ // if not empty
@@ -80,8 +86,6 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                 }
                 // update value only if inputted value is valid
                 if(found){
-                    // update text in html
-                    $(obj).removeClass('select_mode_on').text(inputVal);
                     // update data in database
                     var data = {};
                     data[fieldName] = key;
@@ -90,10 +94,16 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                         url: path,
                         data: data,
                         async: true
+                    }).done(function(){
+                        // update text in html
+                        $(obj).removeClass('select_mode_on').text(inputVal);
+                    }).fail(function(){
+                        // reset default value
+                        $(obj).removeClass('select_mode_on').text(defaultVal);
                     });
                 }else{
                     // reset default value
-                    $(obj).removeClass('select_mode_on').text(this.defaultValue);
+                    $(obj).removeClass('select_mode_on').text(defaultVal);
                 }
             }
         )
@@ -137,10 +147,11 @@ function IsKeyDriveModeOff(event){
  */
 function InputOnKeyDown(obj){
     if(IsKeyDriveModeOff(event)){
-        var parent = $(obj).parent();
+        var parent = $(obj).parents('td');
         obj.blur();
         parent.focus();
     }
+    event.stopPropagation();
 }
 
 
@@ -183,12 +194,58 @@ function InsertSong(tableId, path){
         async: true
     }).done(function(content){
         // insert table line in html
-        console.log($('#' + tableId))
-        console.log($('#' + tableId + ' tbody'))
-        console.log(content)
         $('#' + tableId + ' tbody').append(content);
         $('#button_insert_error_message').html('');
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
 	});
+}
+
+
+
+/*****************************************************************************************************************/
+/*** About Filter Table Column/Row *******************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Switch visibility of table column.
+ * Also send http request to save visibility state in cookie (when path is not null).
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetColumnClass - class of column(td) which you want to switch visibility
+ * @param {String} path - url path to POST
+ * @param {String} targetColumnKey - key of column (for cookie)
+ */
+function FilterVisibleColumn(isSwitchOn, targetColumnClass, path=null, targetColumnKey=null){
+    var data = {};
+    if(isSwitchOn){
+        $('.' + targetColumnClass).css('display', 'table-cell');
+        data[targetColumnKey] = 1;
+    }else{
+        $('.' + targetColumnClass).css('display', 'none');
+        data[targetColumnKey] = 0;
+    }
+    // save visibility state of target column in cookie
+    if(path){
+        $.ajax({
+            type: 'POST',
+            url: path,
+            data: data,
+            async: true
+        })
+    }
+}
+
+/**
+ * Switch visibility of table row.
+ * Support multiple filter(reason) to manage visibility (by switching visibility with adding/removing class).
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetRowClass - class of row(tr) which you want to switch visibility
+ * @param {String} reasonClass - class to distinguish multiple filter(reason)
+ */
+function FilterVisibleRow(isSwitchOn, targetRowClass, reasonClass){
+    if(isSwitchOn){
+        $('.' + targetRowClass).removeClass(reasonClass);
+    }else{
+        $('.' + targetRowClass).addClass(reasonClass);
+    }
 }

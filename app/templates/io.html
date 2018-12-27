@@ -36,10 +36,10 @@ Import and Export
 <div class="x_part">
     <div>
         <button class="z_io_import_append btn btn-default"
-                onclick="SaveImportCsv('textarea_import', {{ path }})"
+                onclick="if(ShowCheckDialogRet('Really import?')){ SaveImportCsv('textarea_import', '{{ path }}') }"
         >{{ STR_BUTTON_LABEL.IMPORT_APPEND_SUBMIT }}</button>
         <button class="z_io_import_replace btn btn-default"
-                onclick="SaveImportCsv('textarea_import', {{ path }}, true)"
+                onclick="if(ShowCheckDialogRet('Really import?', 'Really import? (Existing all songs are deleted)')){ SaveImportCsv('textarea_import', '{{ path }}', true) }"
         >{{ STR_BUTTON_LABEL.IMPORT_REPLACE_SUBMIT }}</button>
         <button class="z_io_export btn btn-default"
         >{{ STR_BUTTON_LABEL.EXPORT_COPY }}</button>

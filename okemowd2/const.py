@@ -2,7 +2,8 @@
 def get_constants(request):
     return {
         'STR_SONG_PROPERTY': {
-            'ID': '',
+            'DELETE_BUTTON': 'X',
+            'ID': 'ID',
             'NAME': 'Song Title',
             'NAME_RUBY': 'Song Title Ruby',
             'ARTIST': 'Artist',
@@ -15,6 +16,41 @@ def get_constants(request):
             'RANK': 'Rank',
             'LINK': 'Sound Link',
         },
+        'STR_SONG_COLUMN_CLASS': {
+            'DELETE_BUTTON': 'xd-song-column-x',
+            'ID': 'xd-song-column-id',
+            'NAME': 'xd-song-column-name',
+            'NAME_RUBY': 'xd-song-column-name-ruby',
+            'ARTIST': 'xd-song-column-artist',
+            'GENRE': 'xd-song-column-genre',
+            'KEY_LEVEL': 'xd-song-column-key-level',
+            'KEY_MIN': 'xd-song-column-key-min',
+            'KEY_FREQ_MIN': 'xd-song-column-key-freq-min',
+            'KEY_FREQ_MAX': 'xd-song-column-key-freq-max',
+            'KEY_MAX': 'xd-song-column-key-max',
+            'RANK': 'xd-song-column-rank',
+            'LINK': 'xd-song-column-link',
+        },
+        'SONG_COLUMN_DEFAULT_VISIBILITY': {  # TODO this should not be here
+            'DELETE_BUTTON': False,
+            'ID': False,
+            'NAME': True,
+            'NAME_RUBY': False,
+            'ARTIST': True,
+            'GENRE': False,
+            'KEY_LEVEL': True,
+            'KEY_MIN': False,
+            'KEY_FREQ_MIN': False,
+            'KEY_FREQ_MAX': True,
+            'KEY_MAX': True,
+            'RANK': True,
+            'LINK': True,
+        },
+        'STR_SONG_ROW_CLASS_PREFIX': {
+            'GENRE': 'xd-song-row-genre-',
+            'KEY_LEVEL': 'xd-song-row-key-level-',
+            'RANK': 'xd-song-row-rank-',
+        },
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',
             'IMPORT_AND_EXPORT': 'Import and Export',
@@ -24,5 +60,8 @@ def get_constants(request):
             'IMPORT_APPEND_SUBMIT': 'Append',
             'IMPORT_REPLACE_SUBMIT': 'Replace',
             'EXPORT_COPY': 'Copy',
+        },
+        'STR_TEXT': {
+            'UNSET_FIELD_VALUE': 'Null',
         }
     }
