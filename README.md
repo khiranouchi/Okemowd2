@@ -55,10 +55,10 @@ Usage
 | ***artist*** | string | artist name | less than 33 characters |
 | ***genre_id*** | integer | genre | must be in the database table "Genre" |
 | ***key_level_id*** | integer | type of tone height | must be in the database table "KeyLevel" |
-| ***key_min*** | integer | lowest tone's key | 0 corresponds to tone C0 |
-| ***key_freq_min*** | integer | frequently appeared lowest tone's key | 0 corresponds to tone C0 |
-| ***key_freq_max*** | integer | frequently appeared highest tone's key | 0 corresponds to tone C0 |
-| ***key_max*** | integer | highest tone's key | 0 corresponds to tone C0 |
+| ***key_min*** | integer | lowest tone's key | 0 corresponds to tone lowlowA |
+| ***key_freq_min*** | integer | frequently appeared lowest tone's key | 0 corresponds to tone lowlowA |
+| ***key_freq_max*** | integer | frequently appeared highest tone's key | 0 corresponds to tone lowlowA |
+| ***key_max*** | integer | highest tone's key | 0 corresponds to tone lowlowA |
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
 
