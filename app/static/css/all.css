@@ -102,3 +102,8 @@ th.headerSortDown {
 .checkbox-inline {
     margin-right: 10px;
 }
+
+/* description */
+dl {
+    margin-bottom: 0;
+}

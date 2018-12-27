@@ -234,4 +234,17 @@ function FilterVisibleColumn(isSwitchOn, targetColumnClass, path=null, targetCol
     }
 }
 
-
+/**
+ * Switch visibility of table row.
+ * Support multiple filter(reason) to manage visibility (by switching visibility with adding/removing class).
+ * @param {Boolean} isSwitchOn - true: make visible / false: make invisible
+ * @param {String} targetRowClass - class of row(tr) which you want to switch visibility
+ * @param {String} reasonClass - class to distinguish multiple filter(reason)
+ */
+function FilterVisibleRow(isSwitchOn, targetRowClass, reasonClass){
+    if(isSwitchOn){
+        $('.' + targetRowClass).removeClass(reasonClass);
+    }else{
+        $('.' + targetRowClass).addClass(reasonClass);
+    }
+}

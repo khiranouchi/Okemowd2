@@ -1,0 +1,11 @@
+/* about table row visibility ****************/
+
+.z-tr-invisible-by-genre {
+    display: none;
+}
+.z-tr-invisible-by-key-level {
+    display: none;
+}
+.z-tr-invisible-by-rank {
+    display: none;
+}
