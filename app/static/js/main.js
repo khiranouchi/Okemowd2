@@ -148,12 +148,12 @@ function IsKeyDriveModeOff(event){
 function InputMoveCell(){
     if(event.keyCode === 13){
         var obj = event.target; // object currently focused
-        obj.blur();
-        obj = $(obj).closest("td");  // <td> object which contains object currently focused (x.closest() includes x itself)
+        obj.blur(); // (necessary when used in input-tag)
+        obj = $(obj).closest("td"); // <td> object which contains object currently focused (x.closest() includes x itself)
         if(event.shiftKey){
-            $("td", $(obj).parent().prev()).eq($(obj).index()).focus();
+            $("td", $(obj).parent().prevAll(':visible:first')).eq($(obj).index()).focus();
         }else{
-            $("td", $(obj).parent().next()).eq($(obj).index()).focus();
+            $("td", $(obj).parent().nextAll(':visible:first')).eq($(obj).index()).focus();
         }
     }
 }
@@ -167,13 +167,13 @@ function InputMoveCellVim(){
         var obj = event.target; // object currently focused
         obj = $(obj).closest("td"); // <td> object which contains object currently focused (x.closest() includes x itself)
         if(event.keyCode === 72){
-            $(obj).prev().focus();
+            $(obj).prevAll(':visible:first').focus();
         }else if(event.keyCode === 76){
-            $(obj).next().focus();
+            $(obj).nextAll(':visible:first').focus();
         }else if(event.keyCode === 75){
-            $("td", $(obj).parent().prev()).eq($(obj).index()).focus();
+            $("td", $(obj).parent().prevAll(':visible:first')).eq($(obj).index()).focus();
         }else{
-            $("td", $(obj).parent().next()).eq($(obj).index()).focus();
+            $("td", $(obj).parent().nextAll(':visible:first')).eq($(obj).index()).focus();
         }
     }
 }
