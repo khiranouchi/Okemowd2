@@ -71,8 +71,10 @@ Fields can be too few or too many in CSV format.
 
 |Key |Function |
 |---|---|
-| *Tab* | Move to the next cell |
-| *Shift+Tab* | Move to the previos cell |
+| *Tab* / *L* | Move to the next cell (horizontally) |
+| *Shift+Tab* / *H* | Move to the previous cell (horizontally) |
+| *Enter* / *J* | Move to the next cell (vertically) |
+| *Shift+Enter* / *K* | Move to the previous cell (vertically) |
 | *F2* / *Space* / *I* / *A* | Start input-mode of cell |
 | *Esc* / *Ctrl+[* | End input-mode of cell |
 

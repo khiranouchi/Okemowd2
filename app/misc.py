@@ -14,6 +14,9 @@ dict_pitch_name = {
     6: 'D#', 7: 'E', 8: 'F', 9: 'F#', 10: 'G', 11: 'G#'
 }
 
+# tone range
+range_tone = range(0, 73)
+
 
 # trans None into ''
 @register.filter
