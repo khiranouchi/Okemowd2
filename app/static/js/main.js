@@ -14,7 +14,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
-                    + 'onkeydown="InputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this);InputMoveCell()" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
@@ -62,7 +62,7 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
                     + 'autocomplete="on" list=' + datalistTagId + ' '
-                    + 'onkeydown="InputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this);InputMoveCell()" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
@@ -143,11 +143,13 @@ function IsKeyDriveModeOff(event){
 
 /**
  * Move focus on table cell vertically when key is the key to drive that (Enter / Shift+Enter)
+ * Used also in input-tag in SwitchInputMode()/SwitchSelectMode()
  */
 function InputMoveCell(){
     if(event.keyCode === 13){
-        // this works when the current focus is exactly on <td>
-        var obj = event.target;
+        var obj = event.target; // object currently focused
+        obj.blur();
+        obj = $(obj).closest("td");  // <td> object which contains object currently focused (x.closest() includes x itself)
         if(event.shiftKey){
             $("td", $(obj).parent().prev()).eq($(obj).index()).focus();
         }else{
