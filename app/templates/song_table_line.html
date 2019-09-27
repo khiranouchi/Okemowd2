@@ -1,5 +1,5 @@
 {% for song in song_list %}
-<tr class="{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}{{ song.genre.id }} {{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}{{ song.key_level.id }} {{ STR_SONG_ROW_CLASS_PREFIX.RANK }}{{ song.rank }}" onkeydown="PreventDefaultKey(32)">
+<tr class="{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}{{ song.genre.id }} {{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}{{ song.key_level.id }} {{ STR_SONG_ROW_CLASS_PREFIX.RANK }}{{ song.rank }}" onkeydown="PreventDefaultKey(32);InputMoveCell()">
     <td class="{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}" onkeydown="PreventDefaultKey(13)">
         <button class="btn" onclick="if(ShowCheckDialogRet('Really delete this song?')){ DeleteSong(this, '{% url 'app:main_entry' song.id %}') }">x</button>
     </td>

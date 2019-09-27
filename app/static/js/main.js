@@ -142,6 +142,21 @@ function IsKeyDriveModeOff(event){
 }
 
 /**
+ * Move focus on table cell vertically when key is the key to drive that (Enter / Shift+Enter)
+ */
+function InputMoveCell(){
+    if(event.keyCode === 13){
+        // this works when the current focus is exactly on <td>
+        var obj = event.target;
+        if(event.shiftKey){
+            $("td", $(obj).parent().prev()).eq($(obj).index()).focus();
+        }else{
+            $("td", $(obj).parent().next()).eq($(obj).index()).focus();
+        }
+    }
+}
+
+/**
  * Function used in input-tag in SwitchInputMode()/SwitchSelectMode()
  * @param {Object} obj - object of input-tag
  */
