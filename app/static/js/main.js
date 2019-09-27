@@ -159,6 +159,26 @@ function InputMoveCell(){
 }
 
 /**
+ * Move focus on table cell vertically when key is the key to drive that (H / L / K / J)
+ * Not used in input-tag in SwitchInputMode()/SwitchSelectMode()
+ */
+function InputMoveCellVim(){
+    if(event.keyCode === 72 || event.keyCode === 76 || event.keyCode === 75 || event.keyCode === 74){
+        var obj = event.target; // object currently focused
+        obj = $(obj).closest("td"); // <td> object which contains object currently focused (x.closest() includes x itself)
+        if(event.keyCode === 72){
+            $(obj).prev().focus();
+        }else if(event.keyCode === 76){
+            $(obj).next().focus();
+        }else if(event.keyCode === 75){
+            $("td", $(obj).parent().prev()).eq($(obj).index()).focus();
+        }else{
+            $("td", $(obj).parent().next()).eq($(obj).index()).focus();
+        }
+    }
+}
+
+/**
  * Function used in input-tag in SwitchInputMode()/SwitchSelectMode()
  * @param {Object} obj - object of input-tag
  */
