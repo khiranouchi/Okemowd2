@@ -34,6 +34,8 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('input_mode_on').text(inputVal);
+                        // update tablesorter
+                        $(obj).closest('table').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('input_mode_on').text(defaultVal);
@@ -97,6 +99,8 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('select_mode_on').text(inputVal);
+                        // update tablesorter
+                        $(obj).closest('table').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('select_mode_on').text(defaultVal);
@@ -212,6 +216,8 @@ function DeleteSong(obj, path){
     }).done(function(){
         // delete table line in html
         $(obj).closest("tr").remove();
+        // update tablesorter (if not do this, reappear deleted rows when sort)
+        $('#table_song_list').trigger('update');
     });
 }
 
@@ -230,9 +236,12 @@ function InsertSong(tableId, path){
         data: {'name': '(new_song)', 'name_ruby': '(new_song)'},
         async: true
     }).done(function(content){
+        var row = $(content);
         // insert table line in html
-        $('#' + tableId + ' tbody').append(content);
+        $('#' + tableId + ' tbody').append(row);
         $('#button_insert_error_message').html('');
+        // update tablesorter
+        $('#' + tableId).trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
 	});
