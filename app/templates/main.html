@@ -154,7 +154,9 @@ $(document).ready(function(){
     {% endif %}
     {% endfor %}
     // activate tablesorter
-    $("#table_song_list").tablesorter();
+    $("#table_song_list").tablesorter({
+        tabIndex: false
+    });
 });
 </script>
 

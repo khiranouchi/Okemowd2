@@ -2868,6 +2868,19 @@
 		type : 'numeric'
 	});
 
+	ts.addParser({
+		id : 'metatext',
+		is : function() {
+			return false;
+		},
+		format : function( str, table, cell ) {
+			var c = table.config,
+			p = ( !c.parserMetatextName ) ? 'sortValue' : c.parserMetatextName;
+			return $( cell ).metadata()[ p ];
+		},
+		type : 'text'
+	});
+
 	/*
 		██████ ██████ █████▄ █████▄ ▄████▄
 		  ▄█▀  ██▄▄   ██▄▄██ ██▄▄██ ██▄▄██
