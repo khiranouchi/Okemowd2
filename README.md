@@ -83,6 +83,7 @@ Fields can be too few or too many in CSV format.
 Dependency
 --------
 + tablesorter
+  - the version forked by Rob Garrison (https://github.com/Mottie/tablesorter)
   - Copyright (c) 2014 Christian Bach
   - Released under the MIT license
   - https://github.com/christianbach/tablesorter/blob/master/LICENSE
