@@ -10,9 +10,11 @@
                  SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name', false, updatecellTablesorter)}"
     ><div class="x_limit_width_14">{{ song.name }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.NAME_RUBY }} x_td_align_left" tabindex="0"
-        onclick=";SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false, updatecellTablesorter)"
+        onclick=";SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false,
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.NAME }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false, updatecellTablesorter)}"
+                 SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'name_ruby', false,
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.NAME }}')}"
     ><div class="x_limit_width_14">{{ song.name_ruby }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.ARTIST }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'artist', true, updatecellTablesorter)"
@@ -25,29 +27,39 @@
                  SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre', updatecellTablesorter)}"
     >{{ song.genre|filter_none }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_sv:song.key_level_id }} }" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}')}"
     >{{ song.key_level|filter_none }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_MIN }} x_td_align_center {sortValue: {{ song.key_min|filter_none_sv }} }" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MIN }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_min', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MIN }}')}"
     >{{ song.key_min|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }} x_td_align_center {sortValue: {{ song.key_freq_min|filter_none_sv }} }" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_min', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }}')}"
     >{{ song.key_freq_min|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }} x_td_align_center {sortValue: {{ song.key_freq_max|filter_none_sv }} }" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_freq_max', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }}')}"
     >{{ song.key_freq_max|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_MAX }} x_td_align_center {sortValue: {{ song.key_max|filter_none_sv }} }" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_max', 'datalist_key',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')}"
     >{{ song.key_max|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.RANK }} x_td_align_center" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank', updatecellTablesorter)"

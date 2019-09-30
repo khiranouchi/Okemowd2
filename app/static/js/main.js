@@ -10,9 +10,10 @@
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {Boolean} arrowEmpty - if empty input is arrowed or not
- * @param {Object} callback - callback function called after input-mode is finished successfully
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback){
+function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback, ...args){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
@@ -37,7 +38,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback){
                         // update text in html
                         $(obj).removeClass('input_mode_on').text(inputVal);
                         // call callback function at the end
-                        callback(obj);
+                        callback(obj, null, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('input_mode_on').text(defaultVal);
@@ -60,9 +61,10 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback){
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {String} datalistTagId - id of tag of datalist to autocomplete input area
- * @param {Object} callback - callback function called after select-mode is finished successfully
+ * @param {Object} callback - callback function called after select-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback){
+function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback, ...args){
     if(!$(obj).hasClass('select_mode_on')){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
@@ -103,7 +105,7 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback){
                         // update text in html
                         $(obj).removeClass('select_mode_on').text(inputVal);
                         // call callback function at the end
-                        callback(obj);
+                        callback(obj, key, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('select_mode_on').text(defaultVal);
@@ -230,7 +232,7 @@ function DeleteSong(obj, path, callback){
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line
  * @param {String} path - url path to POST
- * @param {Object} callback - callback function called after song is inserted successfully
+ * @param {Object} callback - callback function called after song is inserted successfully (arg: inserted row)
  */
 function InsertSong(tableId, path, callback){
     var songId;
