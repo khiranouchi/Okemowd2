@@ -74,6 +74,8 @@ def main(request):
                 request.POST.get('key_max'),
                 request.POST.get('rank'),
                 request.POST.get('link'),
+                request.POST.get('note'),
+                request.POST.get('check'),
             ]
             song_data_list = [song_data]
 
@@ -85,7 +87,7 @@ def main(request):
                 if song_data[i] is None or not song_data[i]:
                     song_data[i] = None
             # define undefined element as None
-            for i in range(len(song_data), 11):  # 11 is the number of fields!!!
+            for i in range(len(song_data), Song.number_of_fields()):
                 song_data.append(None)
 
             # name and name_ruby have nonnull restriction
@@ -110,6 +112,11 @@ def main(request):
                 except KeyLevel.DoesNotExist:
                     return HttpResponse(status=400)
 
+            # check have nonnull restriction
+            check = song_data[12]
+            if check is None:
+                check = False
+
             song = Song.objects.create(
                 name = name,
                 name_ruby = name_ruby,
@@ -122,6 +129,8 @@ def main(request):
                 key_max = song_data[8],
                 rank = song_data[9],
                 link = song_data[10],
+                note = song_data[11],
+                check = check,
             )
 
             song_list.append(song)
@@ -197,6 +206,10 @@ def main_entry(request, song_id):
                 song.rank = value
             elif key == 'link':
                 song.link = value
+            elif key == 'note':
+                song.note = value
+            elif key == 'check':
+                song.check = value
             song.save()
 
         return HttpResponse(status=204)
