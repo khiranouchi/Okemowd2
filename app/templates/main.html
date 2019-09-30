@@ -166,7 +166,7 @@ var addrowsTablesorter = function(row){
     $('#table_song_list').trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
 };
 var updatecellTablesorter = function(obj, key, val, args){  // args: [<target column_class>]
-    // 1. update sortValue (if necessary)
+    // update sortValue (if necessary)
     var columnClass = args[0];
     if(args.length > 0){
         var regex = /({.*sortValue.*:.*})/g;
@@ -176,6 +176,8 @@ var updatecellTablesorter = function(obj, key, val, args){  // args: [<target co
             var str_class = $(target).attr('class');
             str_class = str_class.replace(regex, "{sortValue: '" + val + "' }");
             $(target).attr('class', str_class);
+            // need to update tablesorter about cell whose sortValue is updated
+            $('#table_song_list').trigger('updateCell', [$(target), false]);
         }else{
             // about <td> which contains columnClass in its class, set its sortValue = key
             if(key === null){
@@ -188,7 +190,7 @@ var updatecellTablesorter = function(obj, key, val, args){  // args: [<target co
             $(target).attr('class', str_class);
         }
     }
-    // 2. update tablesorter
+    // update tablesorter (about cell whose content is updated)
     $('#table_song_list').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
 }
 </script>

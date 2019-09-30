@@ -73,11 +73,11 @@ $.extend({
 			// check for empty string in single property
 			if ( !settings.single.length ) settings.single = 'metadata';
 			
-			var data = $.data(elem, settings.single);
+			//var data = $.data(elem, settings.single);
 			// returned cached data if it already exists
-			if ( data ) return data;
-			
-			data = "{}";
+			//if ( data ) return data;  /// Disabled cache system!!
+
+			var data = "{}";
 			
 			if ( settings.type == "class" ) {
 				var m = settings.cre.exec( elem.className );
