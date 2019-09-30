@@ -9,8 +9,10 @@
  * @param {Object} obj - object of the tag whose content you want to be switched
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
+ * @param {Boolean} arrowEmpty - if empty input is arrowed or not
+ * @param {Object} callback - callback function called after input-mode is finished successfully
  */
-function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
+function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
@@ -34,8 +36,8 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('input_mode_on').text(inputVal);
-                        // update tablesorter
-                        $(obj).closest('table').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
+                        // call callback function at the end
+                        callback(obj);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('input_mode_on').text(defaultVal);
@@ -58,8 +60,9 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {String} datalistTagId - id of tag of datalist to autocomplete input area
+ * @param {Object} callback - callback function called after select-mode is finished successfully
  */
-function SwitchSelectMode(obj, path, fieldName, datalistTagId){
+function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback){
     if(!$(obj).hasClass('select_mode_on')){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
@@ -99,8 +102,8 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('select_mode_on').text(inputVal);
-                        // update tablesorter
-                        $(obj).closest('table').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
+                        // call callback function at the end
+                        callback(obj);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('select_mode_on').text(defaultVal);
@@ -206,8 +209,9 @@ function InputOnKeyDown(obj){
  * Also send http request to DELETE the song.
  * @param {Object} obj - child object of the tr-object which you want to be deleted
  * @param {String} path - url path to DELETE
+ * @param {Object} callback - callback function called after song is deleted successfully
  */
-function DeleteSong(obj, path){
+function DeleteSong(obj, path, callback){
     // delete data in database
     $.ajax({
         type: 'DELETE',
@@ -216,8 +220,8 @@ function DeleteSong(obj, path){
     }).done(function(){
         // delete table line in html
         $(obj).closest("tr").remove();
-        // update tablesorter (if not do this, reappear deleted rows when sort)
-        $('#table_song_list').trigger('update');
+        // call callback function at the end
+        callback();
     });
 }
 
@@ -226,8 +230,9 @@ function DeleteSong(obj, path){
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line
  * @param {String} path - url path to POST
+ * @param {Object} callback - callback function called after song is inserted successfully
  */
-function InsertSong(tableId, path){
+function InsertSong(tableId, path, callback){
     var songId;
     // insert data in database and get song-id
     $.ajax({
@@ -240,8 +245,8 @@ function InsertSong(tableId, path){
         // insert table line in html
         $('#' + tableId + ' tbody').append(row);
         $('#button_insert_error_message').html('');
-        // update tablesorter
-        $('#' + tableId).trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
+        // call callback function at the end
+        callback(row);
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
 	});

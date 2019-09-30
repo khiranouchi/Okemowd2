@@ -129,7 +129,7 @@ Song List
     <!-- Buttons -->
     <div>
         <div class="x_inline_block">
-            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
+            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}', addrowsTablesorter)"
             >{{ STR_BUTTON_LABEL.ADD_EMPTY_SONG }}</button>
         </div>
         <div class="x_inline_block">
@@ -158,6 +158,16 @@ $(document).ready(function(){
         tabIndex: false
     });
 });
+// callbacks to update tablesorter
+var updateTablesorter = function(){
+    $('#table_song_list').trigger('update');
+};
+var addrowsTablesorter = function(row){
+    $('#table_song_list').trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
+};
+var updatecellTablesorter = function(obj){
+    $('#table_song_list').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
+}
 </script>
 
 {% endblock %}
