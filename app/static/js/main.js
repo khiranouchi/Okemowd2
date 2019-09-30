@@ -9,8 +9,11 @@
  * @param {Object} obj - object of the tag whose content you want to be switched
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
+ * @param {Boolean} arrowEmpty - if empty input is arrowed or not
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
+function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback, ...args){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
@@ -34,6 +37,8 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('input_mode_on').text(inputVal);
+                        // call callback function at the end
+                        callback(obj, null, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('input_mode_on').text(defaultVal);
@@ -56,8 +61,10 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {String} datalistTagId - id of tag of datalist to autocomplete input area
+ * @param {Object} callback - callback function called after select-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchSelectMode(obj, path, fieldName, datalistTagId){
+function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback, ...args){
     if(!$(obj).hasClass('select_mode_on')){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
@@ -97,6 +104,8 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('select_mode_on').text(inputVal);
+                        // call callback function at the end
+                        callback(obj, key, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('select_mode_on').text(defaultVal);
@@ -202,8 +211,9 @@ function InputOnKeyDown(obj){
  * Also send http request to DELETE the song.
  * @param {Object} obj - child object of the tr-object which you want to be deleted
  * @param {String} path - url path to DELETE
+ * @param {Object} callback - callback function called after song is deleted successfully
  */
-function DeleteSong(obj, path){
+function DeleteSong(obj, path, callback){
     // delete data in database
     $.ajax({
         type: 'DELETE',
@@ -212,6 +222,8 @@ function DeleteSong(obj, path){
     }).done(function(){
         // delete table line in html
         $(obj).closest("tr").remove();
+        // call callback function at the end
+        callback();
     });
 }
 
@@ -220,8 +232,9 @@ function DeleteSong(obj, path){
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line
  * @param {String} path - url path to POST
+ * @param {Object} callback - callback function called after song is inserted successfully (arg: inserted row)
  */
-function InsertSong(tableId, path){
+function InsertSong(tableId, path, callback){
     var songId;
     // insert data in database and get song-id
     $.ajax({
@@ -230,9 +243,12 @@ function InsertSong(tableId, path){
         data: {'name': '(new_song)', 'name_ruby': '(new_song)'},
         async: true
     }).done(function(content){
+        var row = $(content);
         // insert table line in html
-        $('#' + tableId + ' tbody').append(content);
+        $('#' + tableId + ' tbody').append(row);
         $('#button_insert_error_message').html('');
+        // call callback function at the end
+        callback(row);
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
 	});

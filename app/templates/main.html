@@ -129,7 +129,7 @@ Song List
     <!-- Buttons -->
     <div>
         <div class="x_inline_block">
-            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}')"
+            <button class="btn btn-default" onclick="InsertSong('table_song_list', '{% url 'app:main' %}', addrowsTablesorter)"
             >{{ STR_BUTTON_LABEL.ADD_EMPTY_SONG }}</button>
         </div>
         <div class="x_inline_block">
@@ -154,8 +154,45 @@ $(document).ready(function(){
     {% endif %}
     {% endfor %}
     // activate tablesorter
-    $("#table_song_list").tablesorter();
+    $("#table_song_list").tablesorter({
+        tabIndex: false
+    });
 });
+// callbacks to update tablesorter
+var updateTablesorter = function(){
+    $('#table_song_list').trigger('update');
+};
+var addrowsTablesorter = function(row){
+    $('#table_song_list').trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
+};
+var updatecellTablesorter = function(obj, key, val, args){  // args: [<target column_class>]
+    // update sortValue (if necessary)
+    var columnClass = args[0];
+    if(args.length > 0){
+        var regex = /({.*sortValue.*:.*})/g;
+        if(columnClass === '{{ STR_SONG_COLUMN_CLASS.NAME }}'){
+            // about <td> which contains columnClass in its class, set its sortValue = val
+            var target = $(obj).closest('tr').find('td.{{ STR_SONG_COLUMN_CLASS.NAME }}');
+            var str_class = $(target).attr('class');
+            str_class = str_class.replace(regex, "{sortValue: '" + val + "' }");
+            $(target).attr('class', str_class);
+            // need to update tablesorter about cell whose sortValue is updated
+            $('#table_song_list').trigger('updateCell', [$(target), false]);
+        }else{
+            // about <td> which contains columnClass in its class, set its sortValue = key
+            if(key === null){
+                console.log('key was null');
+                key = "''";
+            }
+            var target = $(obj).closest('tr').find('td.' + columnClass);
+            var str_class = $(target).attr('class');
+            str_class = str_class.replace(regex, "{sortValue: " + key + " }");
+            $(target).attr('class', str_class);
+        }
+    }
+    // update tablesorter (about cell whose content is updated)
+    $('#table_song_list').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
+}
 </script>
 
 {% endblock %}

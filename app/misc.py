@@ -26,12 +26,12 @@ def filter_none(item):
     return item
 
 
-# trans None into -999 (item should be int)
+# trans None into string '' (for tablesorter's sortValue)
 @register.filter
-def filter_none_min(item_int):
-    if item_int is None:
-        return -999
-    return item_int
+def filter_none_sv(item):
+    if item is None:
+        return "''"
+    return item
 
 
 # trans key into item of dictionary (get '' if key does not exist)
@@ -42,11 +42,11 @@ def get_item(dictionary, key):
     return dictionary.get(int(key))
 
 
-# trans key into item of dictionary (get -999 if key does not exist)
+# trans key into item of dictionary (get string '' if key does not exist) (for tablesorter's sortValue)
 @register.filter
-def get_item_int(dictionary, key):
+def get_item_sv(dictionary, key):
     if key is None:
-        return 999
+        return "''"
     return dictionary.get(int(key))
 
 

@@ -71,10 +71,10 @@ body {
 }
 
 /* tablesorter */
-th.headerSortUp {
+th.tablesorter-headerDesc {
     background-color: lavender;
 }
-th.headerSortDown {
+th.tablesorter-headerAsc {
     background-color: lavenderblush;
 }
 
