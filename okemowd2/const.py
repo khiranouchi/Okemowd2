@@ -15,6 +15,8 @@ def get_constants(request):
             'KEY_MAX': 'Highest',
             'RANK': 'Rank',
             'LINK': 'Sound Link',
+            'NOTE': 'Note',
+            'CHECK': 'Check',
         },
         'STR_SONG_COLUMN_CLASS': {
             'DELETE_BUTTON': 'xd-song-column-x',
@@ -30,6 +32,8 @@ def get_constants(request):
             'KEY_MAX': 'xd-song-column-key-max',
             'RANK': 'xd-song-column-rank',
             'LINK': 'xd-song-column-link',
+            'NOTE': 'xd-song-column-note',
+            'CHECK': 'xd-song-column-check',
         },
         'SONG_COLUMN_DEFAULT_VISIBILITY': {  # TODO this should not be here
             'DELETE_BUTTON': False,
@@ -44,12 +48,15 @@ def get_constants(request):
             'KEY_FREQ_MAX': True,
             'KEY_MAX': True,
             'RANK': True,
-            'LINK': True,
+            'LINK': False,
+            'NOTE': True,
+            'CHECK': True,
         },
         'STR_SONG_ROW_CLASS_PREFIX': {
             'GENRE': 'xd-song-row-genre-',
             'KEY_LEVEL': 'xd-song-row-key-level-',
             'RANK': 'xd-song-row-rank-',
+            'CHECK': 'xd-song-row-check-',
         },
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',

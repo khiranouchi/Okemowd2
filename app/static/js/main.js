@@ -1,5 +1,48 @@
 /*****************************************************************************************************************/
-/*** About Input-mode/Select-mode of Table Cell ******************************************************************/
+/*** About PATCH of Table Cell ***********************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Switch cell data within specified list by changing class of specified tag.
+ * Also send http request to PATCH modification of text.
+ * @param {Object} obj - object of the tag whose class you want to change
+ * @param {String} path - url path to PATCH modification
+ * @param {String} fieldName - field name to PATCH modification
+ * @param {Object} valueList - list of values used in PATCH
+ * @param {Object} classList - list of classes used in html
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2: value, arg3: null, arg4-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
+ */
+function SwitchCellClass(obj, path, fieldName, valueList, classList, callback, ...args){
+    $.each(classList, function(i,v){
+        if($(obj).hasClass(v)){
+            var idx_next = (i + 1) % classList.length;
+            // update data in database
+            var data = {};
+            data[fieldName] = valueList[idx_next];
+            $.ajax({
+                type: 'PATCH',
+                url: path,
+                data: data,
+                async: true
+            }).done(function(){
+                // update data in html
+                $(obj).removeClass(classList[i]);
+                $(obj).addClass(classList[idx_next]);
+                // call callback function at the end
+                callback(obj, valueList[idx_next], null, args);
+            }).fail(function(){
+            });
+            // break loop
+            return false;
+        }
+    });
+}
+
+
+
+/*****************************************************************************************************************/
+/*** About Input-mode/Select-mode of Table Cell (About PATCH) ****************************************************/
 /*****************************************************************************************************************/
 
 /**
@@ -10,7 +53,7 @@
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {Boolean} arrowEmpty - if empty input is arrowed or not
- * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2: null, arg3: inputVal, arg4-: args)
  * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
 function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback, ...args){
@@ -61,7 +104,7 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback, ...args){
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {String} datalistTagId - id of tag of datalist to autocomplete input area
- * @param {Object} callback - callback function called after select-mode is finished successfully (arg1: obj, arg2-: args)
+ * @param {Object} callback - callback function called after select-mode is finished successfully (arg1: obj, arg2: key, arg3: inputVal, arg4-: args)
  * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
 function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback, ...args){

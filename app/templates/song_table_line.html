@@ -1,5 +1,5 @@
 {% for song in song_list %}
-<tr class="{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}{{ song.genre.id }} {{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}{{ song.key_level.id }} {{ STR_SONG_ROW_CLASS_PREFIX.RANK }}{{ song.rank }}" onkeydown="PreventDefaultKey(32);InputMoveCell();InputMoveCellVim()">
+<tr class="{{ STR_SONG_ROW_CLASS_PREFIX.GENRE }}{{ song.genre.id }} {{ STR_SONG_ROW_CLASS_PREFIX.KEY_LEVEL }}{{ song.key_level.id }} {{ STR_SONG_ROW_CLASS_PREFIX.RANK }}{{ song.rank }} {{ STR_SONG_ROW_CLASS_PREFIX.CHECK }}{{ song.check }}" onkeydown="PreventDefaultKey(32);InputMoveCell();InputMoveCellVim()">
     <td class="{{ STR_SONG_COLUMN_CLASS.DELETE_BUTTON }}" onkeydown="PreventDefaultKey(13)">
         <button class="btn" tabindex="-1" onclick="if(ShowCheckDialogRet('Really delete this song?')){ DeleteSong(this, '{% url 'app:main_entry' song.id %}', updateTablesorter) }">x</button>
     </td>
@@ -22,9 +22,11 @@
                  SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'artist', true, updatecellTablesorter)}"
     ><div class="x_limit_width_11">{{ song.artist|filter_none }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.GENRE }} x_td_align_left" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')}"
     >{{ song.genre|filter_none }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_sv:song.key_level_id }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level',
@@ -62,14 +64,30 @@
                  updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')}"
     >{{ song.key_max|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.RANK }} x_td_align_center" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.RANK }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.RANK }}')}"
     >{{ dict_rank_name|get_item:song.rank }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.LINK }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link', true, updatecellTablesorter)"
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link', true, updatecellTablesorter)}"
     >{{ song.link|filter_none }}</td> <!-- TODO link -->
+    <td class="{{ STR_SONG_COLUMN_CLASS.NOTE }} x_td_align_left" tabindex="0"
+        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'note', true, updatecellTablesorter)"
+        onkeyup="if(IsKeyDriveModeOn(event)){
+                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'note', true, updatecellTablesorter)}"
+    >{{ song.note|filter_none }}</td>
+    <td class="{{ STR_SONG_COLUMN_CLASS.CHECK }}
+               {% if song.check %}
+               z-td-check-true {sortValue: 1 }
+               {% else %}
+               z-td-check-false {sortValue: '' }
+               {% endif %}"
+        onclick="SwitchCellClass(this, '{% url 'app:main_entry' song.id %}', 'check', [0,1], ['z-td-check-false','z-td-check-true'],
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.CHECK }}')"
+    ></td>
 </tr>
 {% endfor %}

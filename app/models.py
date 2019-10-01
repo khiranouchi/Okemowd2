@@ -31,7 +31,14 @@ class Song(models.Model):
     key_max = models.IntegerField(null=True)      # "
     rank = models.IntegerField(null=True)  # 1,2,3,others
     link = models.TextField(null=True)
+    note = models.TextField(null=True)
+    check = models.BooleanField(default=False)
 
     def values(self):
         return [self.name, self.name_ruby, self.artist, self.genre_id, self.key_level_id,
-                self.key_min, self.key_freq_min, self.key_freq_max, self.key_max, self.rank, self.link]
+                self.key_min, self.key_freq_min, self.key_freq_max, self.key_max, self.rank, self.link,
+                self.note, self.check]
+
+    @staticmethod
+    def number_of_fields():
+        return 13  # 13 is the number of fields!!!

@@ -61,6 +61,8 @@ Usage
 | ***key_max*** | integer | highest tone's key | 0 corresponds to tone lowlowA |
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
+| ***check*** | boolean | on/off check easy to use | |
+| ***note*** | string | free note | |
 
 ***name*** and ***name_ruby*** are neccessary. <br>
 Fields can be too few or too many in CSV format.

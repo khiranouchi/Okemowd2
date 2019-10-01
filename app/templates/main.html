@@ -76,6 +76,19 @@ Song List
                 </label>
             </dd>
         </dl>
+        <dl>
+            <dt>{{ STR_SONG_PROPERTY.CHECK }}</dt>
+            <dd>
+                {% for value in check_list %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.CHECK }}{{ value }}', 'z-tr-invisible-by-check')"
+                    >
+                    {{ value }}
+                </label>
+                {% endfor %}
+            </dd>
+        </dl>
     </div>
 </div>
 
@@ -118,6 +131,8 @@ Song List
                     <th class="{{ STR_SONG_COLUMN_CLASS.KEY_MAX }} {sorter:'metadata'}">{{ STR_SONG_PROPERTY.KEY_MAX }}</th>
                     <th class="{{ STR_SONG_COLUMN_CLASS.RANK }} ">{{ STR_SONG_PROPERTY.RANK }}</th>
                     <th class="{{ STR_SONG_COLUMN_CLASS.LINK }} ">{{ STR_SONG_PROPERTY.LINK }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.NOTE }} ">{{ STR_SONG_PROPERTY.NOTE }}</th>
+                    <th class="{{ STR_SONG_COLUMN_CLASS.CHECK }} {sorter:'metadata'}"></th>
                 </tr>
             </thead>
             <tbody>
@@ -158,7 +173,7 @@ $(document).ready(function(){
         tabIndex: false
     });
 });
-// callbacks to update tablesorter
+// callbacks to update tablesorter & row visibility
 var updateTablesorter = function(){
     $('#table_song_list').trigger('update');
 };
@@ -166,32 +181,76 @@ var addrowsTablesorter = function(row){
     $('#table_song_list').trigger('addRows', [row, false]); // [<object of added tr>, <if resort now>]
 };
 var updatecellTablesorter = function(obj, key, val, args){  // args: [<target column_class>]
-    // update sortValue (if necessary)
     var columnClass = args[0];
-    if(args.length > 0){
-        var regex = /({.*sortValue.*:.*})/g;
-        if(columnClass === '{{ STR_SONG_COLUMN_CLASS.NAME }}'){
-            // about <td> which contains columnClass in its class, set its sortValue = val
-            var target = $(obj).closest('tr').find('td.{{ STR_SONG_COLUMN_CLASS.NAME }}');
-            var str_class = $(target).attr('class');
-            str_class = str_class.replace(regex, "{sortValue: '" + val + "' }");
-            $(target).attr('class', str_class);
-            // need to update tablesorter about cell whose sortValue is updated
-            $('#table_song_list').trigger('updateCell', [$(target), false]);
-        }else{
-            // about <td> which contains columnClass in its class, set its sortValue = key
-            if(key === null){
-                console.log('key was null');
-                key = "''";
-            }
-            var target = $(obj).closest('tr').find('td.' + columnClass);
-            var str_class = $(target).attr('class');
-            str_class = str_class.replace(regex, "{sortValue: " + key + " }");
-            $(target).attr('class', str_class);
+    // 1. update sortValue (if necessary)
+    var regex = /({.*sortValue.*:.*})/g;
+    if(columnClass === '{{ STR_SONG_COLUMN_CLASS.NAME }}'){
+        // about <td> which contains columnClass in its class, set its sortValue = val
+        var target = $(obj).closest('tr').find('td.{{ STR_SONG_COLUMN_CLASS.NAME }}');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(regex, "{sortValue: '" + val + "' }");
+        $(target).attr('class', str_class);
+        // need to update tablesorter about cell whose sortValue is updated
+        $('#table_song_list').trigger('updateCell', [$(target), false]);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.CHECK }}'){
+        // about <td> which contains columnClass in its class, set its sortValue = key (set '' if key is 0)
+        if(key === 0){
+            key = "''";
         }
+        var target = $(obj).closest('tr').find('td.{{ STR_SONG_COLUMN_CLASS.CHECK }}');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(regex, "{sortValue: " + key + " }");
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}'
+          || columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_MIN }}' || columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MIN }}'
+          || columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_FREQ_MAX }}' || columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}'){
+        // about <td> which contains columnClass in its class, set its sortValue = key (set '' if key is null)
+        if(key === null){
+            key = "''";
+        }
+        var target = $(obj).closest('tr').find('td.' + columnClass);
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(regex, "{sortValue: " + key + " }");
+        $(target).attr('class', str_class);
     }
-    // update tablesorter (about cell whose content is updated)
+    // 2. update tablesorter (about cell whose content is updated)
     $('#table_song_list').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
+    // 3. update about row visibility (if necessary)
+    if(columnClass === '{{ STR_SONG_COLUMN_CLASS.GENRE }}'){
+        if(key === null){
+            key = "";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-genre-[^ ]*/g, 'xd-song-row-genre-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}'){
+        if(key === "''"){
+            key = "";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-key-level-[^ ]*/g, 'xd-song-row-key-level-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.RANK }}'){
+        if(key === null){
+            key = "None";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-rank-[^ ]*/g, 'xd-song-row-rank-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.CHECK }}'){
+        if(key === "''"){
+            key = "False";
+        }else{
+            key = "True";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-check-[^ ]*/g, 'xd-song-row-check-' + key);
+        $(target).attr('class', str_class);
+    }
 }
 </script>
 

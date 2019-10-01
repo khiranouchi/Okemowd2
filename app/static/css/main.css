@@ -9,3 +9,16 @@
 .z-tr-invisible-by-rank {
     display: none;
 }
+.z-tr-invisible-by-check {
+    display: none;
+}
+
+
+/* about check cell color ********************/
+
+.z-td-check-false {
+    background-color: unset;
+}
+.z-td-check-true {
+    background-color: #d8ffd8;
+}
