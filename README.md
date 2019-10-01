@@ -61,6 +61,8 @@ Usage
 | ***key_max*** | integer | highest tone's key | 0 corresponds to tone lowlowA |
 | ***rank*** | integer | rank | 1(A) or 2(B) or 3(C) |
 | ***link*** | string | link to music or movie | |
+| ***check*** | boolean | on/off check easy to use | |
+| ***note*** | string | free note | |
 
 ***name*** and ***name_ruby*** are neccessary. <br>
 Fields can be too few or too many in CSV format.
@@ -71,8 +73,10 @@ Fields can be too few or too many in CSV format.
 
 |Key |Function |
 |---|---|
-| *Tab* | Move to the next cell |
-| *Shift+Tab* | Move to the previos cell |
+| *Tab* / *L* | Move to the next cell (horizontally) |
+| *Shift+Tab* / *H* | Move to the previous cell (horizontally) |
+| *Enter* / *J* | Move to the next cell (vertically) |
+| *Shift+Enter* / *K* | Move to the previous cell (vertically) |
 | *F2* / *Space* / *I* / *A* | Start input-mode of cell |
 | *Esc* / *Ctrl+[* | End input-mode of cell |
 
@@ -81,6 +85,7 @@ Fields can be too few or too many in CSV format.
 Dependency
 --------
 + tablesorter
+  - the version forked by Rob Garrison (https://github.com/Mottie/tablesorter)
   - Copyright (c) 2014 Christian Bach
   - Released under the MIT license
   - https://github.com/christianbach/tablesorter/blob/master/LICENSE

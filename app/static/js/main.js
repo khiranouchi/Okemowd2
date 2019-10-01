@@ -1,5 +1,48 @@
 /*****************************************************************************************************************/
-/*** About Input-mode/Select-mode of Table Cell ******************************************************************/
+/*** About PATCH of Table Cell ***********************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Switch cell data within specified list by changing class of specified tag.
+ * Also send http request to PATCH modification of text.
+ * @param {Object} obj - object of the tag whose class you want to change
+ * @param {String} path - url path to PATCH modification
+ * @param {String} fieldName - field name to PATCH modification
+ * @param {Object} valueList - list of values used in PATCH
+ * @param {Object} classList - list of classes used in html
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2: value, arg3: null, arg4-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
+ */
+function SwitchCellClass(obj, path, fieldName, valueList, classList, callback, ...args){
+    $.each(classList, function(i,v){
+        if($(obj).hasClass(v)){
+            var idx_next = (i + 1) % classList.length;
+            // update data in database
+            var data = {};
+            data[fieldName] = valueList[idx_next];
+            $.ajax({
+                type: 'PATCH',
+                url: path,
+                data: data,
+                async: true
+            }).done(function(){
+                // update data in html
+                $(obj).removeClass(classList[i]);
+                $(obj).addClass(classList[idx_next]);
+                // call callback function at the end
+                callback(obj, valueList[idx_next], null, args);
+            }).fail(function(){
+            });
+            // break loop
+            return false;
+        }
+    });
+}
+
+
+
+/*****************************************************************************************************************/
+/*** About Input-mode/Select-mode of Table Cell (About PATCH) ****************************************************/
 /*****************************************************************************************************************/
 
 /**
@@ -9,12 +52,15 @@
  * @param {Object} obj - object of the tag whose content you want to be switched
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
+ * @param {Boolean} arrowEmpty - if empty input is arrowed or not
+ * @param {Object} callback - callback function called after input-mode is finished successfully (arg1: obj, arg2: null, arg3: inputVal, arg4-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
+function SwitchInputMode(obj, path, fieldName, arrowEmpty, callback, ...args){
     if(!$(obj).hasClass('input_mode_on')){
         $(obj).addClass('input_mode_on');
         $(obj).html('<input type="text" '
-                    + 'onkeydown="InputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this);InputMoveCell()" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
@@ -34,6 +80,8 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('input_mode_on').text(inputVal);
+                        // call callback function at the end
+                        callback(obj, null, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('input_mode_on').text(defaultVal);
@@ -56,13 +104,15 @@ function SwitchInputMode(obj, path, fieldName, arrowEmpty=true){
  * @param {String} path - url path to PATCH modification
  * @param {String} fieldName - field name to PATCH modification
  * @param {String} datalistTagId - id of tag of datalist to autocomplete input area
+ * @param {Object} callback - callback function called after select-mode is finished successfully (arg1: obj, arg2: key, arg3: inputVal, arg4-: args)
+ * @param {Object} args - arguments (2nd args and later) of callback function (rest parameters)
  */
-function SwitchSelectMode(obj, path, fieldName, datalistTagId){
+function SwitchSelectMode(obj, path, fieldName, datalistTagId, callback, ...args){
     if(!$(obj).hasClass('select_mode_on')){
         $(obj).addClass('select_mode_on');
         $(obj).html('<input type="text" '
                     + 'autocomplete="on" list=' + datalistTagId + ' '
-                    + 'onkeydown="InputOnKeyDown(this)" '
+                    + 'onkeydown="InputOnKeyDown(this);InputMoveCell()" '
                     + 'value="'+$(obj).text()+'">'); // use current text as default value
         $($(obj)[0].nodeName + '> input').focus().select().blur(
             // listener which activates when the focus is lost
@@ -97,6 +147,8 @@ function SwitchSelectMode(obj, path, fieldName, datalistTagId){
                     }).done(function(){
                         // update text in html
                         $(obj).removeClass('select_mode_on').text(inputVal);
+                        // call callback function at the end
+                        callback(obj, key, inputVal, args);
                     }).fail(function(){
                         // reset default value
                         $(obj).removeClass('select_mode_on').text(defaultVal);
@@ -142,6 +194,43 @@ function IsKeyDriveModeOff(event){
 }
 
 /**
+ * Move focus on table cell vertically when key is the key to drive that (Enter / Shift+Enter)
+ * Used also in input-tag in SwitchInputMode()/SwitchSelectMode()
+ */
+function InputMoveCell(){
+    if(event.keyCode === 13){
+        var obj = event.target; // object currently focused
+        obj.blur(); // (necessary when used in input-tag)
+        obj = $(obj).closest("td"); // <td> object which contains object currently focused (x.closest() includes x itself)
+        if(event.shiftKey){
+            $("td", $(obj).parent().prevAll(':visible:first')).eq($(obj).index()).focus();
+        }else{
+            $("td", $(obj).parent().nextAll(':visible:first')).eq($(obj).index()).focus();
+        }
+    }
+}
+
+/**
+ * Move focus on table cell vertically when key is the key to drive that (H / L / K / J)
+ * Not used in input-tag in SwitchInputMode()/SwitchSelectMode()
+ */
+function InputMoveCellVim(){
+    if(event.keyCode === 72 || event.keyCode === 76 || event.keyCode === 75 || event.keyCode === 74){
+        var obj = event.target; // object currently focused
+        obj = $(obj).closest("td"); // <td> object which contains object currently focused (x.closest() includes x itself)
+        if(event.keyCode === 72){
+            $(obj).prevAll(':visible:first').focus();
+        }else if(event.keyCode === 76){
+            $(obj).nextAll(':visible:first').focus();
+        }else if(event.keyCode === 75){
+            $("td", $(obj).parent().prevAll(':visible:first')).eq($(obj).index()).focus();
+        }else{
+            $("td", $(obj).parent().nextAll(':visible:first')).eq($(obj).index()).focus();
+        }
+    }
+}
+
+/**
  * Function used in input-tag in SwitchInputMode()/SwitchSelectMode()
  * @param {Object} obj - object of input-tag
  */
@@ -165,8 +254,9 @@ function InputOnKeyDown(obj){
  * Also send http request to DELETE the song.
  * @param {Object} obj - child object of the tr-object which you want to be deleted
  * @param {String} path - url path to DELETE
+ * @param {Object} callback - callback function called after song is deleted successfully
  */
-function DeleteSong(obj, path){
+function DeleteSong(obj, path, callback){
     // delete data in database
     $.ajax({
         type: 'DELETE',
@@ -175,6 +265,8 @@ function DeleteSong(obj, path){
     }).done(function(){
         // delete table line in html
         $(obj).closest("tr").remove();
+        // call callback function at the end
+        callback();
     });
 }
 
@@ -183,8 +275,9 @@ function DeleteSong(obj, path){
  * Also send http request to Post new song.
  * @param {Object} tableId - id of the table in which you want to insert line
  * @param {String} path - url path to POST
+ * @param {Object} callback - callback function called after song is inserted successfully (arg: inserted row)
  */
-function InsertSong(tableId, path){
+function InsertSong(tableId, path, callback){
     var songId;
     // insert data in database and get song-id
     $.ajax({
@@ -193,9 +286,12 @@ function InsertSong(tableId, path){
         data: {'name': '(new_song)', 'name_ruby': '(new_song)'},
         async: true
     }).done(function(content){
+        var row = $(content);
         // insert table line in html
-        $('#' + tableId + ' tbody').append(content);
+        $('#' + tableId + ' tbody').append(row);
         $('#button_insert_error_message').html('');
+        // call callback function at the end
+        callback(row);
     }).fail(function(jqXHR, textStatus, errorThrown){
         $('#button_insert_error_message').html('failed');
 	});
