@@ -71,5 +71,14 @@
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link', true, updatecellTablesorter)}"
     >{{ song.link|filter_none }}</td> <!-- TODO link -->
+    <td class="{{ STR_SONG_COLUMN_CLASS.NOTE }} x_td_align_left" tabindex="0"
+        onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'note', true, updatecellTablesorter)"
+        onkeyup="if(IsKeyDriveModeOn(event)){
+                 SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'note', true, updatecellTablesorter)}"
+    >{{ song.note|filter_none }}</td>
+    <td class="{{ STR_SONG_COLUMN_CLASS.CHECK }} x_td_align_center" tabindex="0"
+
+
+    >{{ song.check }}</td>
 </tr>
 {% endfor %}
