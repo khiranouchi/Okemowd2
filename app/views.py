@@ -46,6 +46,7 @@ def main(request):
                 'genre_list': Genre.objects.all(),
                 'key_level_list': KeyLevel.objects.all(),
                 'key_list': range_tone,
+                'check_list': [True, False],
                 'zip_song_column_class': zip(dict_song_column_class.keys(), dict_song_column_class.values(),
                                                dict_song_column_property.values(), song_column_visibility_list),
                 # to avoid template issue (cannot use the same zip more than once for some reason / i want to use zip_song_column_class too here)

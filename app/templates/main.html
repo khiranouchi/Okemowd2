@@ -76,6 +76,19 @@ Song List
                 </label>
             </dd>
         </dl>
+        <dl>
+            <dt>{{ STR_SONG_PROPERTY.CHECK }}</dt>
+            <dd>
+                {% for value in check_list %}
+                <label class="checkbox-inline">
+                    <input type="checkbox" checked
+                           onchange="FilterVisibleRow(this.checked, '{{ STR_SONG_ROW_CLASS_PREFIX.CHECK }}{{ value }}', 'z-tr-invisible-by-check')"
+                    >
+                    {{ value }}
+                </label>
+                {% endfor %}
+            </dd>
+        </dl>
     </div>
 </div>
 

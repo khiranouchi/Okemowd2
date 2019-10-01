@@ -56,6 +56,7 @@ def get_constants(request):
             'GENRE': 'xd-song-row-genre-',
             'KEY_LEVEL': 'xd-song-row-key-level-',
             'RANK': 'xd-song-row-rank-',
+            'CHECK': 'xd-song-row-check-',
         },
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',
