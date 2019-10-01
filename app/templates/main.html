@@ -216,10 +216,41 @@ var updatecellTablesorter = function(obj, key, val, args){  // args: [<target co
     // 2. update tablesorter (about cell whose content is updated)
     $('#table_song_list').trigger('updateCell', [$(obj).closest('td'), false]); // [<object of td>, <if resort now>, <callback>]
     // 3. update about row visibility (if necessary)
-
-
-
-
+    if(columnClass === '{{ STR_SONG_COLUMN_CLASS.GENRE }}'){
+        if(key === null){
+            key = "";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-genre-[^ ]*/g, 'xd-song-row-genre-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }}'){
+        if(key === "''"){
+            key = "";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-key-level-[^ ]*/g, 'xd-song-row-key-level-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.RANK }}'){
+        if(key === null){
+            key = "None";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-rank-[^ ]*/g, 'xd-song-row-rank-' + key);
+        $(target).attr('class', str_class);
+    }else if(columnClass === '{{ STR_SONG_COLUMN_CLASS.CHECK }}'){
+        if(key === "''"){
+            key = "False";
+        }else{
+            key = "True";
+        }
+        var target = $(obj).closest('tr');
+        var str_class = $(target).attr('class');
+        str_class = str_class.replace(/xd-song-row-check-[^ ]*/g, 'xd-song-row-check-' + key);
+        $(target).attr('class', str_class);
+    }
 }
 </script>
 

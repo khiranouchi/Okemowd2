@@ -22,9 +22,11 @@
                  SwitchInputMode($(this).children(), '{% url 'app:main_entry' song.id %}', 'artist', true, updatecellTablesorter)}"
     ><div class="x_limit_width_11">{{ song.artist|filter_none }}</div></td>
     <td class="{{ STR_SONG_COLUMN_CLASS.GENRE }} x_td_align_left" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'genre_id', 'datalist_genre',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.GENRE }}')}"
     >{{ song.genre|filter_none }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.KEY_LEVEL }} x_td_align_center {sortValue: {{ dict_key_level_rank|get_item_sv:song.key_level_id }} }" tabindex="0"
         onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'key_level_id', 'datalist_key_level',
@@ -62,9 +64,11 @@
                  updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.KEY_MAX }}')}"
     >{{ song.key_max|get_key_name }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.RANK }} x_td_align_center" tabindex="0"
-        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank', updatecellTablesorter)"
+        onclick="SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.RANK }}')"
         onkeyup="if(IsKeyDriveModeOn(event)){
-                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank', updatecellTablesorter)}"
+                 SwitchSelectMode(this, '{% url 'app:main_entry' song.id %}', 'rank', 'datalist_rank',
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.RANK }}')}"
     >{{ dict_rank_name|get_item:song.rank }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.LINK }} x_td_align_left" tabindex="0"
         onclick="SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'link', true, updatecellTablesorter)"
