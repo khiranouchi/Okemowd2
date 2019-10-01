@@ -76,9 +76,13 @@
         onkeyup="if(IsKeyDriveModeOn(event)){
                  SwitchInputMode(this, '{% url 'app:main_entry' song.id %}', 'note', true, updatecellTablesorter)}"
     >{{ song.note|filter_none }}</td>
-    <td class="{{ STR_SONG_COLUMN_CLASS.CHECK }} x_td_align_center" tabindex="0"
-
-
-    >{{ song.check }}</td>
+    <td class="{{ STR_SONG_COLUMN_CLASS.CHECK }}
+               {% if song.check %}
+               z-td-check-true
+               {% else %}
+               z-td-check-false
+               {% endif %}"
+        onclick="SwitchCellClass(this, '{% url 'app:main_entry' song.id %}', 'check', [0,1], ['z-td-check-false','z-td-check-true'])"
+    ></td>
 </tr>
 {% endfor %}
