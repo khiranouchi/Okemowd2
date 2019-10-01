@@ -78,11 +78,12 @@
     >{{ song.note|filter_none }}</td>
     <td class="{{ STR_SONG_COLUMN_CLASS.CHECK }}
                {% if song.check %}
-               z-td-check-true
+               z-td-check-true {sortValue: 1 }
                {% else %}
-               z-td-check-false
+               z-td-check-false {sortValue: '' }
                {% endif %}"
-        onclick="SwitchCellClass(this, '{% url 'app:main_entry' song.id %}', 'check', [0,1], ['z-td-check-false','z-td-check-true'])"
+        onclick="SwitchCellClass(this, '{% url 'app:main_entry' song.id %}', 'check', [0,1], ['z-td-check-false','z-td-check-true'],
+                 updatecellTablesorter, '{{ STR_SONG_COLUMN_CLASS.CHECK }}')"
     ></td>
 </tr>
 {% endfor %}
