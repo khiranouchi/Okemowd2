@@ -176,6 +176,8 @@ $(document).ready(function(){
     {% endfor %}
     // activate tablesorter
     $("#table_song_list").tablesorter({
+        widgets: ["stickyHeaders"],
+        widgetOptions: { stickyHeaders: "tablesorter-stickyHeader" },
         tabIndex: false
     });
 });

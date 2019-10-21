@@ -71,6 +71,9 @@ body {
 }
 
 /* tablesorter */
+th.tablesorter-headerUnSorted {
+    background-color: white;
+}
 th.tablesorter-headerDesc {
     background-color: lavender;
 }
