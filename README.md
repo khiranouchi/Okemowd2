@@ -89,3 +89,7 @@ Dependency
   - Copyright (c) 2014 Christian Bach
   - Released under the MIT license
   - https://github.com/christianbach/tablesorter/blob/master/LICENSE
++ clipboard.js
+  - Copyright (c) 2018 Zeno Rocha
+  - Released under the MIT license
+  - https://zenorocha.mit-license.org/
