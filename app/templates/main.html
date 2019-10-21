@@ -152,6 +152,9 @@ Song List
             >{{ STR_BUTTON_LABEL.IMPORT_AND_EXPORT }}</a>
         </div>
         <p id="button_insert_error_message" class="x_inline_block"></p>
+        <div class="x_inline_block">
+            <button class="btn btn-link" onclick="zFilterColumnVisibility()">{{ STR_BUTTON_LABEL.UPDATE_COLUMN_VISIBILITY }}</button>
+        </div>
     </div>
 
 </div>
@@ -159,8 +162,8 @@ Song List
 {% include 'song_table_datalist.html' %}
 
 <script>
-$(document).ready(function(){
-    // initialize column visibility (TODO slow?)
+// update column visibility (TODO slow? / TODO do not include visibility changes after )
+function zFilterColumnVisibility(){
     {% for song_column_key, song_column_class, song_column_visibility in zip_song_column_class2 %}
     {% if song_column_visibility %}
     FilterVisibleColumn(true, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
@@ -168,6 +171,10 @@ $(document).ready(function(){
     FilterVisibleColumn(false, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
     {% endif %}
     {% endfor %}
+}
+$(document).ready(function(){
+    // initialize column visibility
+    zFilterColumnVisibility();
     // activate tablesorter
     $("#table_song_list").tablesorter({
         tabIndex: false

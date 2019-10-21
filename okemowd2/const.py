@@ -61,6 +61,7 @@ def get_constants(request):
         'STR_BUTTON_LABEL': {
             'ADD_EMPTY_SONG': 'Add Song',
             'IMPORT_AND_EXPORT': 'Import and Export',
+            'UPDATE_COLUMN_VISIBILITY': 'update visibility (beta)',
             'IMPORT_APPEND': 'Import(Append)',
             'IMPORT_REPLACE': 'Import(Replace)',
             'EXPORT': 'Export',
