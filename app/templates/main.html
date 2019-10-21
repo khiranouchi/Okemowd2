@@ -99,10 +99,10 @@ Song List
     </div>
 
     <!-- Select visible column -->
-    <div>
+    <div id="checkboxes_column_visibility">
         {% for song_column_key, song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
         <label class="checkbox-inline">
-            <input type="checkbox"
+            <input type="checkbox" data-song_column_class="{{ song_column_class }}"
                    onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}')"
                    {% if song_column_visibility %}
                    checked
@@ -153,7 +153,10 @@ Song List
         </div>
         <p id="button_insert_error_message" class="x_inline_block"></p>
         <div class="x_inline_block">
-            <button class="btn btn-link" onclick="zFilterColumnVisibility()">{{ STR_BUTTON_LABEL.UPDATE_COLUMN_VISIBILITY }}</button>
+            <button class="btn btn-link"
+                    onclick="$('#checkboxes_column_visibility').find('input[type=\'checkbox\']').each(function(i,elem){
+                           if(!$(elem).prop('checked')){ FilterVisibleColumn(false, $(elem).data('song_column_class')); } });"
+            >{{ STR_BUTTON_LABEL.UPDATE_COLUMN_VISIBILITY }}</button>
         </div>
     </div>
 
@@ -162,8 +165,8 @@ Song List
 {% include 'song_table_datalist.html' %}
 
 <script>
-// update column visibility (TODO slow? / TODO do not include visibility changes after )
-function zFilterColumnVisibility(){
+$(document).ready(function(){
+    // initialize column visibility (TODO slow?)
     {% for song_column_key, song_column_class, song_column_visibility in zip_song_column_class2 %}
     {% if song_column_visibility %}
     FilterVisibleColumn(true, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
@@ -171,10 +174,6 @@ function zFilterColumnVisibility(){
     FilterVisibleColumn(false, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}');
     {% endif %}
     {% endfor %}
-}
-$(document).ready(function(){
-    // initialize column visibility
-    zFilterColumnVisibility();
     // activate tablesorter
     $("#table_song_list").tablesorter({
         tabIndex: false
