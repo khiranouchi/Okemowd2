@@ -3,7 +3,9 @@
 {% load static %}
 
 {% block head %}
+<link href="{% static 'css/io.css' %}" rel="stylesheet">
 <script src="{% static 'js/jquery.clipboard.min.js' %}"></script>
+<script src="{% static 'js/jquery.autosize.js' %}"></script>
 <script src="{% static 'js/io.js' %}"></script>
 {% endblock %}
 
@@ -20,7 +22,8 @@ Import and Export
         >{{ STR_BUTTON_LABEL.IMPORT_APPEND }}</button>
         <button id="import_replace" name="z_io_import_replace" class="btn btn-default" onclick="SwitchIoMode(this)"
         >{{ STR_BUTTON_LABEL.IMPORT_REPLACE }}</button>
-        <button id="export" name="z_io_export" class="btn btn-default" onclick="SwitchIoMode(this)"
+        <button id="export" name="z_io_export" class="btn btn-default"
+                onclick="SwitchIoMode(this);LoadExportCsv('textarea_export', '{{ path }}')"
         >{{ STR_BUTTON_LABEL.EXPORT }}</button>
     </div>
 </div>
@@ -53,7 +56,9 @@ Import and Export
 $(document).ready(function(){
     // initialize selection (select import_append)
     SwitchIoMode($('#import_append').get());
-    LoadExportCsv('textarea_export', '{{ path }}');
+    // activate autosize
+    autosize($('textarea'));
+    $('textarea').on('focus', function(){ autosize.update(this) });
     // activate clipboard
     new ClipboardJS('.z_btn_clipboard');
 });

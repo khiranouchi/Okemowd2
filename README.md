@@ -89,6 +89,10 @@ Dependency
   - Copyright (c) 2014 Christian Bach
   - Released under the MIT license
   - https://github.com/christianbach/tablesorter/blob/master/LICENSE
++ Autosize
+  - Copyright (c) 2015 Jack Moore
+  - Released under the MIT license
+  - https://github.com/jackmoore/autosize/blob/master/LICENSE.md
 + clipboard.js
   - Copyright (c) 2018 Zeno Rocha
   - Released under the MIT license
