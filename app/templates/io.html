@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block head %}
+<link href="{% static 'css/io.css' %}" rel="stylesheet">
+<script src="{% static 'js/jquery.clipboard.min.js' %}"></script>
+<script src="{% static 'js/jquery.autosize.js' %}"></script>
 <script src="{% static 'js/io.js' %}"></script>
 {% endblock %}
 
@@ -19,7 +22,8 @@ Import and Export
         >{{ STR_BUTTON_LABEL.IMPORT_APPEND }}</button>
         <button id="import_replace" name="z_io_import_replace" class="btn btn-default" onclick="SwitchIoMode(this)"
         >{{ STR_BUTTON_LABEL.IMPORT_REPLACE }}</button>
-        <button id="export" name="z_io_export" class="btn btn-default" onclick="SwitchIoMode(this)"
+        <button id="export" name="z_io_export" class="btn btn-default"
+                onclick="SwitchIoMode(this);LoadExportCsv('textarea_export', '{{ path }}')"
         >{{ STR_BUTTON_LABEL.EXPORT }}</button>
     </div>
 </div>
@@ -41,17 +45,22 @@ Import and Export
         <button class="z_io_import_replace btn btn-default"
                 onclick="if(ShowCheckDialogRet('Really import?', 'Really import? (Existing all songs are deleted)')){ SaveImportCsv('textarea_import', '{{ path }}', true) }"
         >{{ STR_BUTTON_LABEL.IMPORT_REPLACE_SUBMIT }}</button>
-        <button class="z_io_export btn btn-default"
+        <button class="z_io_export z_btn_clipboard btn btn-default"
+                data-clipboard-target="#textarea_export"
         >{{ STR_BUTTON_LABEL.EXPORT_COPY }}</button>
         <p id="button_submit_error_message" class="z_io_import_append z_io_import_replace z_io_export"></p>
     </div>
 </div>
 
 <script>
-// initialize selection (select import_append)
 $(document).ready(function(){
+    // initialize selection (select import_append)
     SwitchIoMode($('#import_append').get());
-    LoadExportCsv('textarea_export', '{{ path }}');
+    // activate autosize
+    autosize($('textarea'));
+    $('textarea').on('focus', function(){ autosize.update(this) });
+    // activate clipboard
+    new ClipboardJS('.z_btn_clipboard');
 });
 </script>
 
