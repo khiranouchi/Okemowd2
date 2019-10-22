@@ -44,8 +44,6 @@ Usage
 | PATCH | /main/*song_id*/ | modify specified song | normal | (no content) |
 | DELETE | /main/*song_id*/ | delete specified song | - | (no content) |
 
-(The others are TODO)
-
 **Fields**
 
 |Field name |Type |Detail |Rule |
@@ -69,6 +67,13 @@ Fields can be too few or too many in CSV format.
 
 ### Page
 
+**Mouse Operations**
+
+|Mouse |Function |
+|---|---|
+| *Left-click* | Start input-mode of cell |
+| *Right-click* | Select row |
+
 **Keyboard Shortcuts**
 
 |Key |Function |
@@ -79,8 +84,8 @@ Fields can be too few or too many in CSV format.
 | *Shift+Enter* / *K* | Move to the previous cell (vertically) |
 | *F2* / *Space* / *I* / *A* | Start input-mode of cell |
 | *Esc* / *Ctrl+[* | End input-mode of cell |
-
-(The others are TODO)
+| *V* | Select row |
+| *N* | Scroll window to selected row |
 
 Dependency
 --------
