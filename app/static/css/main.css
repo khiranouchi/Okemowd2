@@ -22,3 +22,10 @@
 .z-td-check-true {
     background-color: #d8ffd8;
 }
+
+
+/* about row selection and scroll ************/
+
+.z-tr-selected {
+    background-color: lightyellow !important;
+}

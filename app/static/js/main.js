@@ -345,3 +345,34 @@ function FilterVisibleRow(isSwitchOn, targetRowClass, reasonClass){
         $('.' + targetRowClass).addClass(reasonClass);
     }
 }
+
+
+
+/*****************************************************************************************************************/
+/*** About row selection & scroll control ************************************************************************/
+/*****************************************************************************************************************/
+
+/**
+ * Select row.
+ * Select specified row & deselect current selected row if exist.
+ * Deselect specified row when the row is already selected.
+ * @param {Object} obj - tr-object which you want to be selected
+ */
+function SelectRow(obj){
+    if(!$(obj).hasClass('z-tr-selected')){
+        $(obj).closest('table').find('tr.z-tr-selected').removeClass('z-tr-selected');
+        $(obj).addClass('z-tr-selected');
+    }else{
+        $(obj).removeClass('z-tr-selected');
+    }
+}
+
+/**
+ * Select row when key is the key to drive that (V)
+ * @param {Object} obj - tr-object which you want to be selected
+ */
+function InputSelectRow(obj){
+    if(event.keyCode === 86){
+        SelectRow(obj);
+    }
+}
