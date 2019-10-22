@@ -179,6 +179,12 @@ $(document).ready(function(){
         widgets: ["stickyHeaders"],
         widgetOptions: { stickyHeaders: "tablesorter-stickyHeader" },
         tabIndex: false
+    }).on('sortEnd', function(e,table){
+        ScrollToSelectedRow('table_song_list');
+    });
+    // add key-input event listener to whole window
+    $(window).on('keydown', function(){
+        InputScrollToSelectedRow('table_song_list');
     });
 });
 // callbacks to update tablesorter & row visibility
