@@ -99,10 +99,10 @@ Song List
     </div>
 
     <!-- Select visible column -->
-    <div>
+    <div id="checkboxes_column_visibility">
         {% for song_column_key, song_column_class, song_column_property, song_column_visibility in zip_song_column_class %}
         <label class="checkbox-inline">
-            <input type="checkbox"
+            <input type="checkbox" data-song_column_class="{{ song_column_class }}"
                    onchange="FilterVisibleColumn(this.checked, '{{ song_column_class }}', '{% url 'app:main_cookie' %}', '{{ song_column_key }}')"
                    {% if song_column_visibility %}
                    checked
@@ -152,6 +152,12 @@ Song List
             >{{ STR_BUTTON_LABEL.IMPORT_AND_EXPORT }}</a>
         </div>
         <p id="button_insert_error_message" class="x_inline_block"></p>
+        <div class="x_inline_block">
+            <button class="btn btn-link"
+                    onclick="$('#checkboxes_column_visibility').find('input[type=\'checkbox\']').each(function(i,elem){
+                           if(!$(elem).prop('checked')){ FilterVisibleColumn(false, $(elem).data('song_column_class')); } });"
+            >{{ STR_BUTTON_LABEL.UPDATE_COLUMN_VISIBILITY }}</button>
+        </div>
     </div>
 
 </div>
@@ -170,7 +176,15 @@ $(document).ready(function(){
     {% endfor %}
     // activate tablesorter
     $("#table_song_list").tablesorter({
+        widgets: ["stickyHeaders"],
+        widgetOptions: { stickyHeaders: "tablesorter-stickyHeader" },
         tabIndex: false
+    }).on('sortEnd', function(e,table){
+        ScrollToSelectedRow('table_song_list');
+    });
+    // add key-input event listener to whole window
+    $(window).on('keydown', function(){
+        InputScrollToSelectedRow('table_song_list');
     });
 });
 // callbacks to update tablesorter & row visibility
