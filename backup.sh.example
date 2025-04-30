@@ -1,0 +1,28 @@
+#!/bin/sh
+
+cur_path=/.../Okemowd2/
+drive_path=.../
+drive_folder_relative_path=.../okemowd2_seed/
+drive_folder_path=${drive_path}${drive_folder_relative_path}
+
+tables_lower=("song")
+
+google-drive-ocamlfuse ${drive_path}
+source ${cur_path}venv/bin/activate
+
+rm ${drive_folder_path}* -f
+echo Deleted the existing seed files at folder ${drive_folder_path} in google drive
+
+for((i=0; i<${#tables_lower[@]}; i++))
+do
+    seeder_path=${cur_path}app/fixtures/${tables_lower[i]}.json
+    rm ${seeder_path} -f
+    python3 ${cur_path}manage.py dumpdata --indent=2 --format=json app.${tables_lower[i]} > ${seeder_path}
+    cp ${seeder_path} ${drive_folder_path}
+    echo Saved the seed file of ${tables_lower[i]} at folder ${drive_folder_path} in google drive
+done
+
+deactivate
+fusermount -u ${drive_path}
+
+echo -- done at `date`
